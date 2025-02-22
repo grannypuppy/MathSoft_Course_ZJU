@@ -1,117 +1,97 @@
-% 设置文档类为文章类型，使用A4纸张大小
 \documentclass[a4paper]{article}
-
-% ====== 导入必要的包 ======
-% geometry包用于设置页面布局和边距
-\usepackage{geometry}
-% 设置页面边距：左3.5cm, 右3.5cm, 上2cm, 下4cm
-\geometry{left=3.5cm, right=3.5cm, top=2cm, bottom=4cm}
+\usepackage{geometry} % 加载 geometry 宏包
+\geometry{left=3.7cm, right=3.7cm, top=2cm, bottom=4cm} % 设置页面边距
 \usepackage[utf8]{inputenc}
-\usepackage{ctex}
+\usepackage{ctex} % 加载 ctex 宏包以支持中文
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usepackage{enumitem}
+\usepackage{enumitem}  % 添加这一行
+\usepackage{cite} % 引用文献
 
-% ====== 文档信息设置 ======
+\linespread{1.6}  % 1.5倍行距
+
+
 \title{中值定理的证明}
 \author{宋嘉民}
 \date{2025.02.21}
 
-% ====== 文档开始 ======= 
 \begin{document}
 
-% 生成标题页
 \maketitle
 
-% ====== 主要内容部分 ======
-% 第一节：定理及证明
 \section{定理及证明}
+\subsection{中值定理（The Intermediate Value Theorem\cite{tao}）}
+{\kaishu 设 \( a < b \)，且函数 \(f:[a,b] \to \mathbb{R}\) 在 \([a,b]\) 上连续。设 \(y\) 是介于 \(f(a)\) 和 \(f(b)\) 之间的实数，即要么 \(f(a) \leq y \leq f(b)\)，要么 \(f(a) \geq y \geq f(b)\)，则存在 \(c \in [a,b]\) 使得 \(f(c) = y\)}
 
-% 定理陈述
-\subsection{中值定理（The Intermediate Value Theorem）}
-% 使用数学模式输入定理的形式化表述
-设 \( a < b \)，且函数 \(f:[a,b] \to \mathbb{R}\) 在 \([a,b]\) 上连续。设 \(y\) 是介于 \(f(a)\) 和 \(f(b)\) 之间的实数，即要么 \(f(a) \leq y \leq f(b)\)，要么 \(f(a) \geq y \geq f(b)\),则存在 \(c \in [a,b]\) 使得 \(f(c) = y\)
 
-% 证明部分
 \subsection{证明}
 
-% ====== TikZ图形绘制 ======
-% 创建一个新的tikz图形环境，设置缩放比例为1.2
 \begin{tikzpicture}[scale=1.2]
-    % 绘制x轴和y轴
+    % 坐标轴
     \draw[->] (-0.5,0) -- (4.5,0) node[right] {$x$};
     \draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
     
-    % 绘制示例函数曲线（二次函数）
+    % 绘制一个更平缓的连续函数曲线
     \draw[blue, thick, smooth, samples=100, domain=0:4] 
         plot (\x,{0.2*(\x)^2 - 0.3*\x + 1});
     
-    % 定义关键点坐标
+    % 标记端点 a 和 b
     \coordinate (a) at (1,0.9);
     \coordinate (b) at (3,1.9);
     \coordinate (c) at (2.11,1.252);
     
-    % 标记函数上的点
+    % 在曲线上标记点
     \fill (a) circle (1.5pt) node[below right] {$f(a)$};
     \fill (b) circle (1.5pt) node[below right] {$f(b)$};
     
-    % 在x轴上标记点
+    % 在 x 轴上标记 a, b, c
     \draw (1,0) node[below] {$a$} -- (1,0.1);
     \draw (3,0) node[below] {$b$} -- (3,0.1);
     \draw (2.11,0) node[below] {$c$} -- (2.11,0.1);
     
-    % 绘制中间值y的水平线
+    % 标记中间值 y
     \draw[dashed] (-0.3,1.252) -- (4,1.252) node[right] {$y$};
 
-    % 标记f(c)点
     \fill (c) circle (1.5pt) node[right] {$f(c)$};
     
-    % 添加图表标题
+    % 添加标题（位置降低）
     \node[above] at (1.7,2.2) {中值定理证明示意图};
 \end{tikzpicture}
 
-% ====== 证明的形式化步骤 ======
-% Step 1: 讨论初始条件
-我们有两种情况：\(f(a) \leq y \leq f(b)\) 或 \(f(a) \geq y \geq f(b)\)。我们假设前者成立，即 \(f(a) \leq y \leq f(b)\)；后者的证明类似，同理易得。
+我们有两种情况：\(f(a) \leq y \leq f(b)\) 或 \(f(a) \geq y \geq f(b)\)。我们假设前者成立，即 \(f(a) \leq y \leq f(b)\)；后者的证明类似，同理易得。\cite{tao}
 
-% Step 2: 处理边界情况
 如果 \(y = f(a)\) 或 \(y = f(b)\)，则结论显然，只需取 \(c = a\) 或 \(c = b\) 即可。因此我们假设 \(f(a) < y < f(b)\)。
 
-% Step 3: 定义关键集合
 令集合 \(E\) 定义为：\(E := \{x \in [a,b] : f(x) < y\}\)
 
-% Step 4: 分析集合E的性质
 显然 \(E\) 是 \([a,b]\) 的子集，因此有界。又因为 \(f(a) < y\)，所以 \(a\) 是 \(E\) 的元素，因此 \(E\) 非空。根据最小上界原理，上确界\(c := \sup(E)\)是有限的。由于 \(E\) 为 \(b\) 所界，我们知道 \(c \leq b\)；又因为 \(E\) 包含 \(a\)，所以 \(c \geq a\)。因此 \(c \in [a,b]\)。
 
-% Step 5: 证明f(c) = y
+为完成证明，我们现在证明 \(f(c) = y\)。思路是从 \(c\) 的左侧证明 \(f(c) \leq y\)，从 \(c\) 的右侧证明 \(f(c) \geq y\)。
+
 设 \(n \geq 1\) 为整数。\(c - \frac{1}{n}\) 小于 \(c = \sup(E)\)，因此不可能是 \(E\) 的上界。所以存在一点，记为 \(x_n\)，它属于 \(E\) 且大于 \(c - \frac{1}{n}\)。又因为 \(c\) 是 \(E\) 的上界，所以 \(x_n \leq c\)。因此\(c - \frac{1}{n} \leq x_n \leq c\)
 
 根据夹逼准则，我们有 \(\lim_{n \to \infty} x_n = c\)。由于 \(f\) 在 \(c\) 处连续，这意味着 \(\lim_{n \to \infty} f(x_n) = f(c)\)。但由于对每个 \(n\)，\(x_n\) 都属于 \(E\)，所以对每个 \(n\) 都有 \(f(x_n) < y\)。根据比较原理，我们得到 \(f(c) \leq y\)。因为 \(f(b) > f(c)\)，所以 \(c \neq b\)。
 
 因为 \(c \neq b\) 且 \(c \in [a,b]\)，所以必有 \(c < b\)。特别地，存在 \(N > 0\) 使得对所有 \(n > N\)，都有 \(c + \frac{1}{n} < b\)（因为 \(c + \frac{1}{n}\) 当 \(n \to \infty\) 时收敛于 \(c\)）。因为 \(c\) 是 \(E\) 的上确界且 \(c + \frac{1}{n} > c\)，所以对所有 \(n > N\)，都有 \(c + \frac{1}{n} \notin E\)。因为 \(c + \frac{1}{n} \in [a,b]\)，所以对所有 \(n \geq N\)，都有 \(f(c + \frac{1}{n}) \geq y\)。但 \(c + \frac{1}{n}\) 收敛于 \(c\)，且 \(f\) 在 \(c\) 处连续，因此 \(f(c) \geq y\)。而我们已经知道 \(f(c) \leq y\)，所以 \(f(c) = y\)，证毕。
 
-% ====== 选择理由部分 ======
 \section{选择理由}
 
-% 解释选择该定理的原因
 我选择证明中值定理，是因为它不仅是微积分中最基本和重要的定理之一，更是连接函数连续性和函数值域的一座桥梁。这个定理直观上告诉我们，如果一个连续函数的两个函数值分别在某个值的上下两侧，那么在这两点之间一定能找到一点，使得函数在该点的值恰好等于这个值。
 
-% 深入分析选择原因
-通过深入研究这个定理的证明过程，能够帮助我更深入地理解连续函数的本质特征，这也是我选择证明这个定理的重要原因。
 
-% 使用带有自定义标记的列表来列举选择理由
+通过深入研究这个定理的证明过程，能够帮助我更深入地理解连续函数的本质特征，。
+
+选择这个定理也是主要基于以下几点：
 \begin{itemize}[label=\tiny{$\bullet$}, itemsep=0pt]
-    \item 它体现了连续函数的完备性和中间性质;
-    \item 它是证明许多其他重要定理的基础，如罗尔定理、拉格朗日中值定理等,在数值计算、物理建模等领域有着广泛应用
+    \item 它体现了连续函数的几何直观;
+    \item 它是证明许多其他重要定理的基础，如罗尔定理、拉格朗日中值定理等,在数值计算等领域有着广泛应用
     \item 它让我大一上数学分析期末左右旋转上下摇摆十分痛苦，特此单开一帖，记录一下
 \end{itemize}
 
-% ====== 参考文献部分 ======
 \begin{thebibliography}{99}
     \bibitem{tao} Tao, T. (2006). Analysis I. Hindustan Book Agency, pp. 206-207.
 \end{thebibliography}
-
 \end{document}
