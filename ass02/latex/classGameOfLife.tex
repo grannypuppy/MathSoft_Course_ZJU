@@ -1,0 +1,757 @@
+\doxysubsection{Game\+Of\+Life Class Reference}
+\hypertarget{classGameOfLife}{}\label{classGameOfLife}\index{GameOfLife@{GameOfLife}}
+
+
+Class implementing Conway\textquotesingle{}s Game of Life simulation.  
+
+
+
+
+{\ttfamily \#include $<$Game\+Of\+Life.\+h$>$}
+
+
+
+Collaboration diagram for Game\+Of\+Life\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{classGameOfLife__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGameOfLife_ae4df9fa308e71096ec3b04594f804442}{Game\+Of\+Life}} (int height, int width)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classGameOfLife}{Game\+Of\+Life} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGameOfLife_ab06a33fee5a200e5ef62e306aaaea9c7}{\texorpdfstring{$\sim$}{\string~}\+Game\+Of\+Life}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \doxylink{classGameOfLife}{Game\+Of\+Life} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGameOfLife_a8657e5ab9a32f0b0aa45723b0b01da8d}{initialize\+Random}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the game with a random pattern. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGameOfLife_a6462072f58c5a683983e822423cdfd9f}{initialize\+Pattern}} (const std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \&pattern)
+\begin{DoxyCompactList}\small\item\em Initialize the game with a specific pattern. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGameOfLife_a20c255f8af7efc4bea63ad51be4f98ac}{run}} ()
+\begin{DoxyCompactList}\small\item\em Run the game simulation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGameOfLife_a14f03b541c2d1a8a5f9aaa7a1e63f514}{update}} ()
+\begin{DoxyCompactList}\small\item\em Update the game state for one generation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGameOfLife_a08cf13bac855476c54340fa32358348d}{draw}} ()
+\begin{DoxyCompactList}\small\item\em Draw the current game state. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGameOfLife_a54d24b581165d37289f56354f989511b}{save\+As\+BMP}} (const std\+::string \&filename)
+\begin{DoxyCompactList}\small\item\em Save the current game state as a BMP image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classGameOfLife_a3bbbb54d720cbb73424ee5578c813ec5}{init\+NCurses}} ()
+\begin{DoxyCompactList}\small\item\em Initialize ncurses settings. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classGameOfLife_a179f77108bf2040381907063c1b8ff38}{count\+Neighbors}} (int row, int col)
+\begin{DoxyCompactList}\small\item\em Count the number of live neighbors for a cell. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classGameOfLife_af8ebee6e44485b6cc8935db929e41463}{generate\+Timestamp}} ()
+\begin{DoxyCompactList}\small\item\em Generate a timestamp string for filenames. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGameOfLife_a4f5337c0ef53be1ae4d9f0683546a6e3}{write\+BMPHeader}} (std\+::ofstream \&file, int width, int height)
+\begin{DoxyCompactList}\small\item\em Write BMP file header. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGameOfLife_ad86e70af8c17971edf2917a991ff05b7}{write\+BMPData}} (std\+::ofstream \&file)
+\begin{DoxyCompactList}\small\item\em Write BMP image data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Height of the game grid. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Width of the game grid. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Current state of the game grid. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{classGameOfLife_ad40c073c914778a1828db704cff50127}{next\+Grid\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Next state of the game grid. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGameOfLife_ab5d1b9c10f9e1eb29247f9e58dfa657f}{running\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Flag indicating if the game is running. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classGameOfLife_a4b633630019dd7271a5d7b392e15c667}{generation\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Current generation count. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Class implementing Conway\textquotesingle{}s Game of Life simulation. 
+
+This class provides functionality to run and visualize Conway\textquotesingle{}s Game of Life using the ncurses library for terminal-\/based visualization. 
+
+Definition at line \mbox{\hyperlink{GameOfLife_8h_source_l00026}{26}} of file \mbox{\hyperlink{GameOfLife_8h_source}{Game\+Of\+Life.\+h}}.
+
+
+
+\doxysubsubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classGameOfLife_ae4df9fa308e71096ec3b04594f804442}\label{classGameOfLife_ae4df9fa308e71096ec3b04594f804442} 
+\index{GameOfLife@{GameOfLife}!GameOfLife@{GameOfLife}}
+\index{GameOfLife@{GameOfLife}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{GameOfLife()}{GameOfLife()}}
+{\footnotesize\ttfamily Game\+Of\+Life\+::\+Game\+Of\+Life (\begin{DoxyParamCaption}\item[{int}]{height,  }\item[{int}]{width }\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{classGameOfLife}{Game\+Of\+Life} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em height} & The height of the game grid \\
+\hline
+{\em width} & The width of the game grid \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009\ \ \ \ \ :\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}}(height),\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}}(width),\ \mbox{\hyperlink{classGameOfLife_ab5d1b9c10f9e1eb29247f9e58dfa657f}{running\_}}(\textcolor{keyword}{true}),\ \mbox{\hyperlink{classGameOfLife_a4b633630019dd7271a5d7b392e15c667}{generation\_}}(0)\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{comment}{//\ Initialize\ grid\ with\ all\ cells\ dead}}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}.resize(\mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}},\ std::vector<bool>(\mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}},\ \textcolor{keyword}{false}));}
+\DoxyCodeLine{00012\ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad40c073c914778a1828db704cff50127}{nextGrid\_}}.resize(\mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}},\ std::vector<bool>(\mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}},\ \textcolor{keyword}{false}));}
+\DoxyCodeLine{00013\ \ \ \ \ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{comment}{//\ Initialize\ ncurses}}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{classGameOfLife_a3bbbb54d720cbb73424ee5578c813ec5}{initNCurses}}();}
+\DoxyCodeLine{00016\ \ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Seed\ random\ number\ generator}}
+\DoxyCodeLine{00018\ \ \ \ \ std::srand(std::time(\textcolor{keyword}{nullptr}));}
+\DoxyCodeLine{00019\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_ab06a33fee5a200e5ef62e306aaaea9c7}\label{classGameOfLife_ab06a33fee5a200e5ef62e306aaaea9c7} 
+\index{GameOfLife@{GameOfLife}!````~GameOfLife@{\texorpdfstring{$\sim$}{\string~}GameOfLife}}
+\index{````~GameOfLife@{\texorpdfstring{$\sim$}{\string~}GameOfLife}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GameOfLife()}{\string~GameOfLife()}}
+{\footnotesize\ttfamily Game\+Of\+Life\+::\texorpdfstring{$\sim$}{\string~}\+Game\+Of\+Life (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor for the \doxylink{classGameOfLife}{Game\+Of\+Life} class. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ End\ ncurses\ mode}}
+\DoxyCodeLine{00023\ \ \ \ \ endwin();}
+\DoxyCodeLine{00024\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsubsection{Member Function Documentation}
+\Hypertarget{classGameOfLife_a179f77108bf2040381907063c1b8ff38}\label{classGameOfLife_a179f77108bf2040381907063c1b8ff38} 
+\index{GameOfLife@{GameOfLife}!countNeighbors@{countNeighbors}}
+\index{countNeighbors@{countNeighbors}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{countNeighbors()}{countNeighbors()}}
+{\footnotesize\ttfamily int Game\+Of\+Life\+::count\+Neighbors (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Count the number of live neighbors for a cell. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row of the cell \\
+\hline
+{\em col} & The column of the cell \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of live neighbors 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00158}{158}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{int}\ count\ =\ 0;}
+\DoxyCodeLine{00160\ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ Check\ all\ 8\ neighboring\ cells}}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ -\/1;\ i\ <=\ 1;\ i++)\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ -\/1;\ j\ <=\ 1;\ j++)\ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ the\ cell\ itself}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ 0\ \&\&\ j\ ==\ 0)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ neighbor\ coordinates\ with\ wrapping}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ neighborRow\ =\ (row\ +\ i\ +\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}})\ \%\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}};}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ neighborCol\ =\ (col\ +\ j\ +\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}})\ \%\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}};}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Count\ live\ neighbors}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}[neighborRow][neighborCol])\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00176\ \ \ \ \ \}}
+\DoxyCodeLine{00177\ \ \ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
+\DoxyCodeLine{00179\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_a08cf13bac855476c54340fa32358348d}\label{classGameOfLife_a08cf13bac855476c54340fa32358348d} 
+\index{GameOfLife@{GameOfLife}!draw@{draw}}
+\index{draw@{draw}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Game\+Of\+Life\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Draw the current game state. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00181}{181}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}};\ i++)\ \{}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}};\ j++)\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}[i][j])\ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cell\ is\ alive}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_colors())\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attron(COLOR\_PAIR(1));}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mvaddch(i,\ j,\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attroff(COLOR\_PAIR(1));}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mvaddch(i,\ j,\ \textcolor{charliteral}{'\#'});}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cell\ is\ dead}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_colors())\ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attron(COLOR\_PAIR(2));}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mvaddch(i,\ j,\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attroff(COLOR\_PAIR(2));}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mvaddch(i,\ j,\ \textcolor{charliteral}{'.'});}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00204\ \ \ \ \ \}}
+\DoxyCodeLine{00205\ \ \ \ \ }
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{//\ Update\ the\ screen}}
+\DoxyCodeLine{00207\ \ \ \ \ refresh();}
+\DoxyCodeLine{00208\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_af8ebee6e44485b6cc8935db929e41463}\label{classGameOfLife_af8ebee6e44485b6cc8935db929e41463} 
+\index{GameOfLife@{GameOfLife}!generateTimestamp@{generateTimestamp}}
+\index{generateTimestamp@{generateTimestamp}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{generateTimestamp()}{generateTimestamp()}}
+{\footnotesize\ttfamily std\+::string Game\+Of\+Life\+::generate\+Timestamp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Generate a timestamp string for filenames. 
+
+\begin{DoxyReturn}{Returns}
+A string containing the current timestamp 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00210}{210}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ std::time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keyword}{auto}\ tm\ =\ *std::localtime(\&now);}
+\DoxyCodeLine{00213\ \ \ \ \ }
+\DoxyCodeLine{00214\ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{00215\ \ \ \ \ oss\ <<\ std::put\_time(\&tm,\ \textcolor{stringliteral}{"{}\%Y\%m\%d\_\%H\%M\%S"{}});}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{return}\ oss.str();}
+\DoxyCodeLine{00217\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_a6462072f58c5a683983e822423cdfd9f}\label{classGameOfLife_a6462072f58c5a683983e822423cdfd9f} 
+\index{GameOfLife@{GameOfLife}!initializePattern@{initializePattern}}
+\index{initializePattern@{initializePattern}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{initializePattern()}{initializePattern()}}
+{\footnotesize\ttfamily void Game\+Of\+Life\+::initialize\+Pattern (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \&}]{pattern }\end{DoxyParamCaption})}
+
+
+
+Initialize the game with a specific pattern. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pattern} & The pattern to initialize with \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{int}\ patternHeight\ =\ pattern.size();}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{int}\ patternWidth\ =\ pattern[0].size();}
+\DoxyCodeLine{00055\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Calculate\ starting\ position\ to\ center\ the\ pattern}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{int}\ startRow\ =\ (\mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}}\ -\/\ patternHeight)\ /\ 2;}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{int}\ startCol\ =\ (\mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}}\ -\/\ patternWidth)\ /\ 2;}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Clear\ the\ grid\ first}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}};\ i++)\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}};\ j++)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}[i][j]\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Place\ the\ pattern\ in\ the\ center}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ patternHeight;\ i++)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ patternWidth;\ j++)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ row\ =\ startRow\ +\ i;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ col\ =\ startCol\ +\ j;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (row\ >=\ 0\ \&\&\ row\ <\ height\_\ \&\&\ col\ >=\ 0\ \&\&\ col\ <\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}})\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}[row][col]\ =\ pattern[i][j];}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_a8657e5ab9a32f0b0aa45723b0b01da8d}\label{classGameOfLife_a8657e5ab9a32f0b0aa45723b0b01da8d} 
+\index{GameOfLife@{GameOfLife}!initializeRandom@{initializeRandom}}
+\index{initializeRandom@{initializeRandom}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{initializeRandom()}{initializeRandom()}}
+{\footnotesize\ttfamily void Game\+Of\+Life\+::initialize\+Random (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the game with a random pattern. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00043}{43}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}};\ i++)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}};\ j++)\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 25\%\ chance\ of\ a\ cell\ being\ alive}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}[i][j]\ =\ (std::rand()\ \%\ 4\ ==\ 0);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_a3bbbb54d720cbb73424ee5578c813ec5}\label{classGameOfLife_a3bbbb54d720cbb73424ee5578c813ec5} 
+\index{GameOfLife@{GameOfLife}!initNCurses@{initNCurses}}
+\index{initNCurses@{initNCurses}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{initNCurses()}{initNCurses()}}
+{\footnotesize\ttfamily void Game\+Of\+Life\+::init\+NCurses (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialize ncurses settings. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Initialize\ ncurses}}
+\DoxyCodeLine{00028\ \ \ \ \ initscr();}
+\DoxyCodeLine{00029\ \ \ \ \ cbreak();}
+\DoxyCodeLine{00030\ \ \ \ \ noecho();}
+\DoxyCodeLine{00031\ \ \ \ \ keypad(stdscr,\ TRUE);}
+\DoxyCodeLine{00032\ \ \ \ \ curs\_set(0);\ \ \textcolor{comment}{//\ Hide\ cursor}}
+\DoxyCodeLine{00033\ \ \ \ \ timeout(100);\ \textcolor{comment}{//\ Set\ getch()\ non-\/blocking\ with\ 100ms\ timeout}}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Check\ if\ terminal\ supports\ colors}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{if}\ (has\_colors())\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ start\_color();}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ init\_pair(1,\ COLOR\_BLACK,\ COLOR\_GREEN);\ \ \textcolor{comment}{//\ Live\ cells}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ init\_pair(2,\ COLOR\_BLACK,\ COLOR\_BLACK);\ \ \textcolor{comment}{//\ Dead\ cells}}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_a20c255f8af7efc4bea63ad51be4f98ac}\label{classGameOfLife_a20c255f8af7efc4bea63ad51be4f98ac} 
+\index{GameOfLife@{GameOfLife}!run@{run}}
+\index{run@{run}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Game\+Of\+Life\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Run the game simulation. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00079}{79}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{while}\ (\mbox{\hyperlink{classGameOfLife_ab5d1b9c10f9e1eb29247f9e58dfa657f}{running\_}})\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ screen}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ clear();}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Draw\ the\ current\ state}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_a08cf13bac855476c54340fa32358348d}{draw}}();}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ generation\ count}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ mvprintw(\mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}}\ +\ 1,\ 0,\ \textcolor{stringliteral}{"{}Generation:\ \%d"{}},\ \mbox{\hyperlink{classGameOfLife_a4b633630019dd7271a5d7b392e15c667}{generation\_}});}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ mvprintw(\mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}}\ +\ 2,\ 0,\ \textcolor{stringliteral}{"{}Press\ 'q'\ to\ quit,\ 's'\ to\ save\ image,\ 'r'\ to\ randomize"{}});}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Process\ input}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ch\ =\ getch();}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (ch)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'q'}:}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'Q'}:}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ab5d1b9c10f9e1eb29247f9e58dfa657f}{running\_}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'s'}:}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'S'}:}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ filename\ =\ \textcolor{stringliteral}{"{}gameoflife\_"{}}\ +\ \mbox{\hyperlink{classGameOfLife_af8ebee6e44485b6cc8935db929e41463}{generateTimestamp}}()\ +\ \textcolor{stringliteral}{"{}.bmp"{}};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classGameOfLife_a54d24b581165d37289f56354f989511b}{saveAsBMP}}(filename))\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mvprintw(\mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}}\ +\ 3,\ 0,\ \textcolor{stringliteral}{"{}Image\ saved\ as\ \%s"{}},\ filename.c\_str());}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ refresh();}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::this\_thread::sleep\_for(std::chrono::milliseconds(1000));}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mvprintw(\mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}}\ +\ 3,\ 0,\ \textcolor{stringliteral}{"{}Failed\ to\ save\ image"{}});}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ refresh();}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::this\_thread::sleep\_for(std::chrono::milliseconds(1000));}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'r'}:}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'R'}:}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_a8657e5ab9a32f0b0aa45723b0b01da8d}{initializeRandom}}();}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_a4b633630019dd7271a5d7b392e15c667}{generation\_}}\ =\ 0;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ the\ game\ state}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_a14f03b541c2d1a8a5f9aaa7a1e63f514}{update}}();}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_a4b633630019dd7271a5d7b392e15c667}{generation\_}}++;}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Small\ delay\ to\ control\ game\ speed}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ std::this\_thread::sleep\_for(std::chrono::milliseconds(100));}
+\DoxyCodeLine{00126\ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_a54d24b581165d37289f56354f989511b}\label{classGameOfLife_a54d24b581165d37289f56354f989511b} 
+\index{GameOfLife@{GameOfLife}!saveAsBMP@{saveAsBMP}}
+\index{saveAsBMP@{saveAsBMP}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{saveAsBMP()}{saveAsBMP()}}
+{\footnotesize\ttfamily bool Game\+Of\+Life\+::save\+As\+BMP (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename }\end{DoxyParamCaption})}
+
+
+
+Save the current game state as a BMP image. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the file to save to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the save was successful, false otherwise 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00219}{219}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00220\ \ \ \ \ std::ofstream\ file(filename,\ std::ios::binary);}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{if}\ (!file)\ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00223\ \ \ \ \ \}}
+\DoxyCodeLine{00224\ \ \ \ \ }
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{comment}{//\ Write\ BMP\ header}}
+\DoxyCodeLine{00226\ \ \ \ \ \mbox{\hyperlink{classGameOfLife_a4f5337c0ef53be1ae4d9f0683546a6e3}{writeBMPHeader}}(file,\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}},\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}});}
+\DoxyCodeLine{00227\ \ \ \ \ }
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{comment}{//\ Write\ BMP\ data}}
+\DoxyCodeLine{00229\ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad86e70af8c17971edf2917a991ff05b7}{writeBMPData}}(file);}
+\DoxyCodeLine{00230\ \ \ \ \ }
+\DoxyCodeLine{00231\ \ \ \ \ file.close();}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00233\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_a14f03b541c2d1a8a5f9aaa7a1e63f514}\label{classGameOfLife_a14f03b541c2d1a8a5f9aaa7a1e63f514} 
+\index{GameOfLife@{GameOfLife}!update@{update}}
+\index{update@{update}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Game\+Of\+Life\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Update the game state for one generation. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00129}{129}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Calculate\ the\ next\ generation}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}};\ i++)\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}};\ j++)\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ neighbors\ =\ \mbox{\hyperlink{classGameOfLife_a179f77108bf2040381907063c1b8ff38}{countNeighbors}}(i,\ j);}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ Conway's\ Game\ of\ Life\ rules}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}[i][j])\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cell\ is\ alive}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors\ <\ 2\ ||\ neighbors\ >\ 3)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad40c073c914778a1828db704cff50127}{nextGrid\_}}[i][j]\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Cell\ dies}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad40c073c914778a1828db704cff50127}{nextGrid\_}}[i][j]\ =\ \textcolor{keyword}{true};\ \ \textcolor{comment}{//\ Cell\ survives}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cell\ is\ dead}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors\ ==\ 3)\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad40c073c914778a1828db704cff50127}{nextGrid\_}}[i][j]\ =\ \textcolor{keyword}{true};\ \ \textcolor{comment}{//\ Cell\ becomes\ alive}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad40c073c914778a1828db704cff50127}{nextGrid\_}}[i][j]\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Cell\ stays\ dead}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00152\ \ \ \ \ \}}
+\DoxyCodeLine{00153\ \ \ \ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ Update\ the\ grid\ with\ the\ new\ generation}}
+\DoxyCodeLine{00155\ \ \ \ \ \mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}\ =\ \mbox{\hyperlink{classGameOfLife_ad40c073c914778a1828db704cff50127}{nextGrid\_}};}
+\DoxyCodeLine{00156\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_ad86e70af8c17971edf2917a991ff05b7}\label{classGameOfLife_ad86e70af8c17971edf2917a991ff05b7} 
+\index{GameOfLife@{GameOfLife}!writeBMPData@{writeBMPData}}
+\index{writeBMPData@{writeBMPData}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{writeBMPData()}{writeBMPData()}}
+{\footnotesize\ttfamily void Game\+Of\+Life\+::write\+BMPData (\begin{DoxyParamCaption}\item[{std\+::ofstream \&}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Write BMP image data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The file to write to \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00287}{287}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{comment}{//\ Calculate\ row\ size\ and\ padding}}
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keywordtype}{int}\ rowSize\ =\ ((\mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}}\ *\ 24\ +\ 31)\ /\ 32)\ *\ 4;}
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordtype}{int}\ paddingSize\ =\ rowSize\ -\/\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}}\ *\ 3;}
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ padding[3]\ =\ \{0,\ 0,\ 0\};}
+\DoxyCodeLine{00292\ \ \ \ \ }
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{comment}{//\ BMP\ stores\ images\ bottom-\/up}}
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ \mbox{\hyperlink{classGameOfLife_acfd57807853da0a5be378142739f2b54}{height\_}}\ -\/\ 1;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}{width\_}};\ j++)\ \{}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ color[3];}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ pixel\ color\ (BGR\ format)}}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}{grid\_}}[i][j])\ \{}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Live\ cell\ -\/\ green}}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color[0]\ =\ 0;\ \ \ \ \textcolor{comment}{//\ Blue}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color[1]\ =\ 255;\ \ \textcolor{comment}{//\ Green}}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color[2]\ =\ 0;\ \ \ \ \textcolor{comment}{//\ Red}}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Dead\ cell\ -\/\ black}}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color[0]\ =\ 0;\ \ \ \ \textcolor{comment}{//\ Blue}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color[1]\ =\ 0;\ \ \ \ \textcolor{comment}{//\ Green}}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color[2]\ =\ 0;\ \ \ \ \textcolor{comment}{//\ Red}}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Write\ pixel\ data}}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ file.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(color),\ 3);}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Write\ padding}}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (paddingSize\ >\ 0)\ \{}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ file.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(padding),\ paddingSize);}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00319\ \ \ \ \ \}}
+\DoxyCodeLine{00320\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classGameOfLife_a4f5337c0ef53be1ae4d9f0683546a6e3}\label{classGameOfLife_a4f5337c0ef53be1ae4d9f0683546a6e3} 
+\index{GameOfLife@{GameOfLife}!writeBMPHeader@{writeBMPHeader}}
+\index{writeBMPHeader@{writeBMPHeader}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{writeBMPHeader()}{writeBMPHeader()}}
+{\footnotesize\ttfamily void Game\+Of\+Life\+::write\+BMPHeader (\begin{DoxyParamCaption}\item[{std\+::ofstream \&}]{file,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Write BMP file header. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The file to write to \\
+\hline
+{\em width} & The width of the image \\
+\hline
+{\em height} & The height of the image \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8cpp_source_l00235}{235}} of file \mbox{\hyperlink{GameOfLife_8cpp_source}{Game\+Of\+Life.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{comment}{//\ Calculate\ row\ size\ and\ padding}}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordtype}{int}\ rowSize\ =\ ((width\ *\ 24\ +\ 31)\ /\ 32)\ *\ 4;}
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{keywordtype}{int}\ paddingSize\ =\ rowSize\ -\/\ width\ *\ 3;}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordtype}{int}\ fileSize\ =\ 54\ +\ rowSize\ *\ height;}
+\DoxyCodeLine{00240\ \ \ \ \ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{comment}{//\ BMP\ file\ header\ (14\ bytes)}}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ bmpFileHeader[14]\ =\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'B'},\ \textcolor{charliteral}{'M'},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Signature}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ File\ size\ in\ bytes}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Reserved}}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ 54,\ 0,\ 0,\ 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Offset\ to\ start\ of\ pixel\ data}}
+\DoxyCodeLine{00247\ \ \ \ \ \};}
+\DoxyCodeLine{00248\ \ \ \ \ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{comment}{//\ Update\ file\ size\ in\ header}}
+\DoxyCodeLine{00250\ \ \ \ \ bmpFileHeader[2]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(fileSize);}
+\DoxyCodeLine{00251\ \ \ \ \ bmpFileHeader[3]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(fileSize\ >>\ 8);}
+\DoxyCodeLine{00252\ \ \ \ \ bmpFileHeader[4]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(fileSize\ >>\ 16);}
+\DoxyCodeLine{00253\ \ \ \ \ bmpFileHeader[5]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(fileSize\ >>\ 24);}
+\DoxyCodeLine{00254\ \ \ \ \ }
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{comment}{//\ BMP\ info\ header\ (40\ bytes)}}
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ bmpInfoHeader[40]\ =\ \{}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ 40,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Info\ header\ size}}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Width}}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Height}}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ 1,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ color\ planes}}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ 24,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bits\ per\ pixel}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compression}}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Image\ size}}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ X\ pixels\ per\ meter}}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Y\ pixels\ per\ meter}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Colors\ in\ color\ table}}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Important\ color\ count}}
+\DoxyCodeLine{00268\ \ \ \ \ \};}
+\DoxyCodeLine{00269\ \ \ \ \ }
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{comment}{//\ Update\ width\ in\ header}}
+\DoxyCodeLine{00271\ \ \ \ \ bmpInfoHeader[4]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(width);}
+\DoxyCodeLine{00272\ \ \ \ \ bmpInfoHeader[5]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(width\ >>\ 8);}
+\DoxyCodeLine{00273\ \ \ \ \ bmpInfoHeader[6]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(width\ >>\ 16);}
+\DoxyCodeLine{00274\ \ \ \ \ bmpInfoHeader[7]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(width\ >>\ 24);}
+\DoxyCodeLine{00275\ \ \ \ \ }
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{comment}{//\ Update\ height\ in\ header}}
+\DoxyCodeLine{00277\ \ \ \ \ bmpInfoHeader[8]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(height);}
+\DoxyCodeLine{00278\ \ \ \ \ bmpInfoHeader[9]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(height\ >>\ 8);}
+\DoxyCodeLine{00279\ \ \ \ \ bmpInfoHeader[10]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(height\ >>\ 16);}
+\DoxyCodeLine{00280\ \ \ \ \ bmpInfoHeader[11]\ =\ (\textcolor{keywordtype}{unsigned}\ char)(height\ >>\ 24);}
+\DoxyCodeLine{00281\ \ \ \ \ }
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{comment}{//\ Write\ headers}}
+\DoxyCodeLine{00283\ \ \ \ \ file.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(bmpFileHeader),\ 14);}
+\DoxyCodeLine{00284\ \ \ \ \ file.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(bmpInfoHeader),\ 40);}
+\DoxyCodeLine{00285\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsubsection{Member Data Documentation}
+\Hypertarget{classGameOfLife_a4b633630019dd7271a5d7b392e15c667}\label{classGameOfLife_a4b633630019dd7271a5d7b392e15c667} 
+\index{GameOfLife@{GameOfLife}!generation\_@{generation\_}}
+\index{generation\_@{generation\_}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{generation\_}{generation\_}}
+{\footnotesize\ttfamily int Game\+Of\+Life\+::generation\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Current generation count. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8h_source_l00112}{112}} of file \mbox{\hyperlink{GameOfLife_8h_source}{Game\+Of\+Life.\+h}}.
+
+\Hypertarget{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d}\label{classGameOfLife_ad426cf32b08f7913c613acf4e66fb82d} 
+\index{GameOfLife@{GameOfLife}!grid\_@{grid\_}}
+\index{grid\_@{grid\_}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{grid\_}{grid\_}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$bool$>$ $>$ Game\+Of\+Life\+::grid\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Current state of the game grid. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8h_source_l00109}{109}} of file \mbox{\hyperlink{GameOfLife_8h_source}{Game\+Of\+Life.\+h}}.
+
+\Hypertarget{classGameOfLife_acfd57807853da0a5be378142739f2b54}\label{classGameOfLife_acfd57807853da0a5be378142739f2b54} 
+\index{GameOfLife@{GameOfLife}!height\_@{height\_}}
+\index{height\_@{height\_}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{height\_}{height\_}}
+{\footnotesize\ttfamily int Game\+Of\+Life\+::height\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Height of the game grid. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8h_source_l00107}{107}} of file \mbox{\hyperlink{GameOfLife_8h_source}{Game\+Of\+Life.\+h}}.
+
+\Hypertarget{classGameOfLife_ad40c073c914778a1828db704cff50127}\label{classGameOfLife_ad40c073c914778a1828db704cff50127} 
+\index{GameOfLife@{GameOfLife}!nextGrid\_@{nextGrid\_}}
+\index{nextGrid\_@{nextGrid\_}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{nextGrid\_}{nextGrid\_}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$bool$>$ $>$ Game\+Of\+Life\+::next\+Grid\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Next state of the game grid. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8h_source_l00110}{110}} of file \mbox{\hyperlink{GameOfLife_8h_source}{Game\+Of\+Life.\+h}}.
+
+\Hypertarget{classGameOfLife_ab5d1b9c10f9e1eb29247f9e58dfa657f}\label{classGameOfLife_ab5d1b9c10f9e1eb29247f9e58dfa657f} 
+\index{GameOfLife@{GameOfLife}!running\_@{running\_}}
+\index{running\_@{running\_}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{running\_}{running\_}}
+{\footnotesize\ttfamily bool Game\+Of\+Life\+::running\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Flag indicating if the game is running. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8h_source_l00111}{111}} of file \mbox{\hyperlink{GameOfLife_8h_source}{Game\+Of\+Life.\+h}}.
+
+\Hypertarget{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373}\label{classGameOfLife_a500e60ddc4dbb5c6b3eb139d3a7ea373} 
+\index{GameOfLife@{GameOfLife}!width\_@{width\_}}
+\index{width\_@{width\_}!GameOfLife@{GameOfLife}}
+\doxyparagraph{\texorpdfstring{width\_}{width\_}}
+{\footnotesize\ttfamily int Game\+Of\+Life\+::width\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Width of the game grid. 
+
+
+
+Definition at line \mbox{\hyperlink{GameOfLife_8h_source_l00108}{108}} of file \mbox{\hyperlink{GameOfLife_8h_source}{Game\+Of\+Life.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{GameOfLife_8h}{Game\+Of\+Life.\+h}}\item 
+\mbox{\hyperlink{GameOfLife_8cpp}{Game\+Of\+Life.\+cpp}}\end{DoxyCompactItemize}

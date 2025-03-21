@@ -25,10 +25,19 @@ HTML_OUTPUT            = html
 GENERATE_LATEX         = YES
 LATEX_OUTPUT           = latex
 
+# LaTeX options - minimize intermediate files
+LATEX_HIDE_INDICES     = YES
+LATEX_SOURCE_CODE      = NO
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = YES
+LATEX_TIMESTAMP        = NO
+COMPACT_LATEX          = YES
+
 # Dot tool for graphs
 HAVE_DOT               = YES
 DOT_IMAGE_FORMAT       = png
 INTERACTIVE_SVG        = YES
+DOT_CLEANUP            = YES
 
 # Source browsing
 SOURCE_BROWSER         = YES
@@ -44,29 +53,14 @@ BUILTIN_STL_SUPPORT    = YES
 GENERATE_BUGLIST       = YES
 GENERATE_DEPRECATEDLIST= YES
 
-# Cleanup options - don't keep intermediate files
-LATEX_HIDE_INDICES     = YES
+# Reduce intermediate files
+GENERATE_DOCSET        = NO
+GENERATE_HTMLHELP      = NO
+GENERATE_QHP           = NO
+GENERATE_ECLIPSEHELP   = NO
 GENERATE_RTF           = NO
 GENERATE_MAN           = NO
 GENERATE_XML           = NO
 GENERATE_DOCBOOK       = NO
 GENERATE_AUTOGEN_DEF   = NO
 GENERATE_PERLMOD       = NO
-GENERATE_TAGFILE       = NO
-GENERATE_LEGEND        = YES
-GENERATE_CHI           = NO
-GENERATE_DOCSET        = NO
-GENERATE_HTMLHELP      = NO
-GENERATE_QHP           = NO
-GENERATE_ECLIPSEHELP   = NO
-
-# Keep only essential intermediate files
-HTML_TIMESTAMP         = NO
-HTML_DYNAMIC_SECTIONS  = NO
-GENERATE_TODOLIST      = NO
-GENERATE_TESTLIST      = NO
-QUIET                  = YES
-WARNINGS               = YES
-WARN_IF_UNDOCUMENTED   = YES
-WARN_IF_DOC_ERROR      = YES
-WARN_NO_PARAMDOC       = NO

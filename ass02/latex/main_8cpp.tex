@@ -1,0 +1,269 @@
+\doxysubsection{main.\+cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{main.cpp@{main.cpp}}
+
+
+Main entry point for Conway\textquotesingle{}s Game of Life.  
+
+
+{\ttfamily \#include "{}Game\+Of\+Life.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for main.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{main_8cpp_ac5890e5a1f8ee05cf73330c11e153d34}{create\+Glider}} ()
+\begin{DoxyCompactList}\small\item\em Create a glider pattern. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{main_8cpp_aed2531031a897dbbe8b206f7db0a5705}{create\+Blinker}} ()
+\begin{DoxyCompactList}\small\item\em Create a blinker pattern. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ \mbox{\hyperlink{main_8cpp_ac951d28d3ce51038f1ea862b38864c13}{create\+Gosper\+Glider\+Gun}} ()
+\begin{DoxyCompactList}\small\item\em Create a Gosper glider gun pattern. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_aad9ed7a055a99883645739e4bfca0e5e}{display\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Display menu and get user choice. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em Main function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Main entry point for Conway\textquotesingle{}s Game of Life. 
+
+\begin{DoxyAuthor}{Author}
+Your Name 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+March 2025 
+\end{DoxyDate}
+
+
+Definition in file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+
+\doxysubsubsection{Function Documentation}
+\Hypertarget{main_8cpp_aed2531031a897dbbe8b206f7db0a5705}\label{main_8cpp_aed2531031a897dbbe8b206f7db0a5705} 
+\index{main.cpp@{main.cpp}!createBlinker@{createBlinker}}
+\index{createBlinker@{createBlinker}!main.cpp@{main.cpp}}
+\doxyparagraph{\texorpdfstring{createBlinker()}{createBlinker()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ create\+Blinker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a blinker pattern. 
+
+\begin{DoxyReturn}{Returns}
+A vector representing a blinker pattern 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00029}{29}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ std::vector<std::vector<bool>>\ pattern\ =\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \{\textcolor{keyword}{false},\ \textcolor{keyword}{false},\ \textcolor{keyword}{false}\},}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \{\textcolor{keyword}{true},\ \textcolor{keyword}{true},\ \textcolor{keyword}{true}\},}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \{\textcolor{keyword}{false},\ \textcolor{keyword}{false},\ \textcolor{keyword}{false}\}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \textcolor{keywordflow}{return}\ pattern;}
+\DoxyCodeLine{00036\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{main_8cpp_ac5890e5a1f8ee05cf73330c11e153d34}\label{main_8cpp_ac5890e5a1f8ee05cf73330c11e153d34} 
+\index{main.cpp@{main.cpp}!createGlider@{createGlider}}
+\index{createGlider@{createGlider}!main.cpp@{main.cpp}}
+\doxyparagraph{\texorpdfstring{createGlider()}{createGlider()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ create\+Glider (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a glider pattern. 
+
+\begin{DoxyReturn}{Returns}
+A vector representing a glider pattern 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ std::vector<std::vector<bool>>\ pattern\ =\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \{\textcolor{keyword}{false},\ \textcolor{keyword}{true},\ \textcolor{keyword}{false}\},}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \{\textcolor{keyword}{false},\ \textcolor{keyword}{false},\ \textcolor{keyword}{true}\},}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \{\textcolor{keyword}{true},\ \textcolor{keyword}{true},\ \textcolor{keyword}{true}\}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \};}
+\DoxyCodeLine{00022\ \ \ \ \ \ \textcolor{keywordflow}{return}\ pattern;}
+\DoxyCodeLine{00023\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{main_8cpp_ac951d28d3ce51038f1ea862b38864c13}\label{main_8cpp_ac951d28d3ce51038f1ea862b38864c13} 
+\index{main.cpp@{main.cpp}!createGosperGliderGun@{createGosperGliderGun}}
+\index{createGosperGliderGun@{createGosperGliderGun}!main.cpp@{main.cpp}}
+\doxyparagraph{\texorpdfstring{createGosperGliderGun()}{createGosperGliderGun()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::vector$<$ bool $>$ $>$ create\+Gosper\+Glider\+Gun (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a Gosper glider gun pattern. 
+
+\begin{DoxyReturn}{Returns}
+A vector representing a Gosper glider gun pattern 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00042}{42}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ std::vector<std::vector<bool>>\ pattern(11,\ std::vector<bool>(38,\ \textcolor{keyword}{false}));}
+\DoxyCodeLine{00044\ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \textcolor{comment}{//\ Left\ block}}
+\DoxyCodeLine{00046\ \ \ \ \ \ pattern[5][1]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00047\ \ \ \ \ \ pattern[6][1]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00048\ \ \ \ \ \ pattern[5][2]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00049\ \ \ \ \ \ pattern[6][2]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00050\ \ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \textcolor{comment}{//\ Right\ block}}
+\DoxyCodeLine{00052\ \ \ \ \ \ pattern[3][35]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00053\ \ \ \ \ \ pattern[4][35]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00054\ \ \ \ \ \ pattern[3][36]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00055\ \ \ \ \ \ pattern[4][36]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00056\ \ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \textcolor{comment}{//\ Left\ ship}}
+\DoxyCodeLine{00058\ \ \ \ \ \ pattern[3][13]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00059\ \ \ \ \ \ pattern[3][14]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00060\ \ \ \ \ \ pattern[4][12]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00061\ \ \ \ \ \ pattern[4][16]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00062\ \ \ \ \ \ pattern[5][11]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00063\ \ \ \ \ \ pattern[5][17]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00064\ \ \ \ \ \ pattern[6][11]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00065\ \ \ \ \ \ pattern[6][15]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00066\ \ \ \ \ \ pattern[6][17]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00067\ \ \ \ \ \ pattern[6][18]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00068\ \ \ \ \ \ pattern[7][11]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00069\ \ \ \ \ \ pattern[7][17]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00070\ \ \ \ \ \ pattern[8][12]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00071\ \ \ \ \ \ pattern[8][16]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00072\ \ \ \ \ \ pattern[9][13]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00073\ \ \ \ \ \ pattern[9][14]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00074\ \ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \textcolor{comment}{//\ Right\ ship}}
+\DoxyCodeLine{00076\ \ \ \ \ \ pattern[1][25]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00077\ \ \ \ \ \ pattern[2][23]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00078\ \ \ \ \ \ pattern[2][25]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00079\ \ \ \ \ \ pattern[3][21]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00080\ \ \ \ \ \ pattern[3][22]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00081\ \ \ \ \ \ pattern[4][21]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00082\ \ \ \ \ \ pattern[4][22]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00083\ \ \ \ \ \ pattern[5][21]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00084\ \ \ \ \ \ pattern[5][22]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00085\ \ \ \ \ \ pattern[6][23]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00086\ \ \ \ \ \ pattern[6][25]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00087\ \ \ \ \ \ pattern[7][25]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00088\ \ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \textcolor{keywordflow}{return}\ pattern;}
+\DoxyCodeLine{00090\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{main_8cpp_aad9ed7a055a99883645739e4bfca0e5e}\label{main_8cpp_aad9ed7a055a99883645739e4bfca0e5e} 
+\index{main.cpp@{main.cpp}!displayMenu@{displayMenu}}
+\index{displayMenu@{displayMenu}!main.cpp@{main.cpp}}
+\doxyparagraph{\texorpdfstring{displayMenu()}{displayMenu()}}
+{\footnotesize\ttfamily int display\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Display menu and get user choice. 
+
+\begin{DoxyReturn}{Returns}
+User\textquotesingle{}s menu choice 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00096}{96}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Conway's\ Game\ of\ Life\(\backslash\)n"{}};}
+\DoxyCodeLine{00098\ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}====================\(\backslash\)n"{}};}
+\DoxyCodeLine{00099\ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}1.\ Random\ pattern\(\backslash\)n"{}};}
+\DoxyCodeLine{00100\ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}2.\ Glider\ pattern\(\backslash\)n"{}};}
+\DoxyCodeLine{00101\ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}3.\ Blinker\ pattern\(\backslash\)n"{}};}
+\DoxyCodeLine{00102\ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}4.\ Gosper\ glider\ gun\ pattern\(\backslash\)n"{}};}
+\DoxyCodeLine{00103\ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}0.\ Exit\(\backslash\)n"{}};}
+\DoxyCodeLine{00104\ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Enter\ your\ choice:\ "{}};}
+\DoxyCodeLine{00105\ \ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \textcolor{keywordtype}{int}\ choice;}
+\DoxyCodeLine{00107\ \ \ \ \ \ std::cin\ >>\ choice;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \textcolor{keywordflow}{return}\ choice;}
+\DoxyCodeLine{00109\ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxyparagraph{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Main function. 
+
+\begin{DoxyReturn}{Returns}
+Exit status 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{main_8cpp_source_l00115}{115}} of file \mbox{\hyperlink{main_8cpp_source}{main.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \textcolor{keywordtype}{int}\ choice\ =\ \mbox{\hyperlink{main_8cpp_aad9ed7a055a99883645739e4bfca0e5e}{displayMenu}}();}
+\DoxyCodeLine{00117\ \ \ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \textcolor{keywordflow}{if}\ (choice\ ==\ 0)\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00120\ \ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \textcolor{comment}{//\ Create\ game\ with\ appropriate\ size}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \textcolor{keywordtype}{int}\ height\ =\ 30;}
+\DoxyCodeLine{00124\ \ \ \ \ \ \textcolor{keywordtype}{int}\ width\ =\ 80;}
+\DoxyCodeLine{00125\ \ \ \ \ \ \mbox{\hyperlink{classGameOfLife}{GameOfLife}}\ game(height,\ width);}
+\DoxyCodeLine{00126\ \ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ based\ on\ user\ choice}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (choice)\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ game.initializeRandom();}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ game.initializePattern(\mbox{\hyperlink{main_8cpp_ac5890e5a1f8ee05cf73330c11e153d34}{createGlider}}());}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ game.initializePattern(\mbox{\hyperlink{main_8cpp_aed2531031a897dbbe8b206f7db0a5705}{createBlinker}}());}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ game.initializePattern(\mbox{\hyperlink{main_8cpp_ac951d28d3ce51038f1ea862b38864c13}{createGosperGliderGun}}());}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ game.initializeRandom();}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00144\ \ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \textcolor{comment}{//\ Run\ the\ game}}
+\DoxyCodeLine{00147\ \ \ \ \ \ game.run();}
+\DoxyCodeLine{00148\ \ \ \ \ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00150\ \ \}}
+
+\end{DoxyCode}
