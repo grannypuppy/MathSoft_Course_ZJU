@@ -29,6 +29,7 @@
 ## 依赖安装
 
 ### Ubuntu/Debian
+
 ```bash
 # 更新包列表
 sudo apt update
@@ -40,6 +41,7 @@ sudo apt-get install -y build-essential libncurses5-dev
 sudo apt install -y doxygen graphviz
 
 ```
+
 ## 项目结构
 
 ```
