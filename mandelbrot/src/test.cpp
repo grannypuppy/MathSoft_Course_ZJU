@@ -9,7 +9,8 @@ void printHelp() {
               << "Usage: ./mandelbrot [option]\n\n"
               << "Options:\n"
               << "  --basic       Generate basic Mandelbrot set image (default)\n"
-              << "  --png         Generate PNG image with enhanced colors\n"
+              << "  --png [s]     Generate PNG image with enhanced colors\n"
+              << "                Add 's' for smooth HSV coloring (e.g. --png s)\n"
               << "  --zoom        Generate zoom animation\n"
               << "  --help        Display this help message\n"
               << std::endl;
@@ -27,9 +28,17 @@ int main(int argc, char* argv[]) {
     
     // 解析命令行参数
     std::string mode = "basic";
+    bool useSmoothing = false;
+
     if (argc > 1) {
         std::string arg = argv[1];
-        if (arg == "--png") mode = "png";
+        if (arg == "--png") {
+            mode = "png";
+            // 检查是否有额外的平滑参数
+            if (argc > 2 && argv[2][0] == 's') {
+                useSmoothing = true;
+            }
+        }
         else if (arg == "--zoom") mode = "zoom";
         else if (arg == "--help") {
             printHelp();
@@ -68,8 +77,10 @@ int main(int argc, char* argv[]) {
     else if (mode == "png") {
         // 保存为 PNG 图像，带增强的颜色
         std::string filename = "mandelbrot.png";
-        if (Image::saveImage(result, filename, maxIterations, false)) {
-            std::cout << "Enhanced image saved as " << filename << std::endl;
+        if (Image::saveImage(result, filename, maxIterations, useSmoothing)) {
+            std::cout << "Enhanced image saved as " << filename 
+                      << (useSmoothing ? " (smooth HSV coloring)" : " (sine wave coloring)") 
+                      << std::endl;
         } else {
             std::cerr << "Failed to save enhanced image" << std::endl;
             return 1;
