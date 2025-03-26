@@ -27,6 +27,10 @@ mandelbrot/
 │   ├── mandelbrot_cuda.cu  # CUDA 加速版本实现
 │   ├── image.cpp           # 图像生成和处理实现
 │   └── test.cpp            # 主程序入口
+├── doc/                   # 文档目录
+│   ├── report.tex        # LaTeX 报告源文件
+│   ├── report.pdf        # 生成的PDF报告
+│   └── figures/          # 报告中使用的图片
 ├── build/                  # 编译生成的目标文件
 ├── Makefile                # 项目编译配置
 └── README.md               # 项目说明文档
@@ -44,6 +48,7 @@ mandelbrot/
 ### 依赖安装
 
 #### Ubuntu:
+
 ```bash
 # 安装 C++ 开发工具/Make 等工具过程省略，展示额外依赖
 
@@ -59,15 +64,18 @@ sudo apt install -y nvidia-cuda-toolkit
 ```
 
 ##### Cuda on WSL2
+
 - 请访问 [NVIDIA CUDA 下载页面](https://developer.nvidia.com/cuda-downloads)
 - 选择适合您 Windows 版本的安装包
 - 下载并运行安装程序，按照向导完成安装
 - 安装过程会同时安装 CUDA Toolkit 和兼容的 NVIDIA 驱动
 
 ###### WSL2 特殊配置
+
 如果您在 Windows WSL2 中运行 Linux 系统：
 
 1. **更新 WSL2**：确保使用最新版本的 WSL2
+
    ```powershell
    wsl --update
    ```
@@ -75,11 +83,14 @@ sudo apt install -y nvidia-cuda-toolkit
 2. **配置 WSL2 的 GPU 访问权限**：
    - 在 Windows 主机上安装最新的 [NVIDIA 驱动程序](https://www.nvidia.com/Download/index.aspx)
    - 在 `%UserProfile%\.wslconfig` 文件中添加以下配置：
+
      ```
      [wsl2]
      gpuSupport=true
      ```
+
    - 重启 WSL2：
+
      ```powershell
      wsl --shutdown
      ```
@@ -110,8 +121,6 @@ nvidia-smi
 make
 ```
 
-如果只需编译 CPU 版本（无 CUDA 支持），可修改 Makefile 删除 CUDA 相关部分。
-
 ## 项目功能
 
 1. **基础计算**：计算给定复平面区域内的 Mandelbrot 集
@@ -124,6 +133,11 @@ make
 
 ## 使用方法
 
+### report 生成
+```shell
+# 在makefile所在目录下运行
+make report
+```
 ### 基本命令
 
 ```bash
@@ -167,6 +181,7 @@ make
 项目提供了多个 Make 快捷命令用于运行不同模式：
 
 ```bash
+make report       #编译report.tex 生成report
 make run          # 运行默认模式
 make run-basic    # 生成基本 PPM 图像
 make run-png      # 生成 PNG 图像（正弦波颜色映射）
@@ -178,6 +193,7 @@ make run-cuda-zoom # 使用 CUDA 加速生成缩放动画
 
 ## 输出文件
 
+- report.pdf
 - mandelbrot.ppm：基本 PPM 格式图像
 - mandelbrot.png：增强颜色的 PNG 格式图像(有两种颜色风格可以尝试)
 - mandelbrot_zoom.gif：缩放动画 GIF
@@ -191,5 +207,6 @@ make run-cuda-zoom # 使用 CUDA 加速生成缩放动画
 ## 清理项目
 
 ```bash
+make clean-latex #清理latex编译的中间文件
 make clean
 ```

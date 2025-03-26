@@ -1,0 +1,151 @@
+\documentclass{article}
+\usepackage[UTF8]{ctex}  % 支持中文的宏包
+\usepackage{graphicx}   % 插入图片
+\usepackage{amsmath}    % 数学公式
+\usepackage{amssymb}  
+\usepackage{listings}   % 代码块
+\usepackage{xcolor}     % 颜色
+\usepackage{algorithm}  % 算法
+\usepackage{algpseudocode} % 算法伪代码
+
+\title{Mandelbrot 集可视化项目报告}
+\author{宋嘉民}
+\date{\today}
+
+% 代码样式设置
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+本报告详细介绍了 Mandelbrot 集的数学理论和计算方法，以及基于 C++ 实现的 Mandelbrot 集可视化项目。该项目支持多种输出格式、丰富的颜色映射和动态缩放效果。此外，项目还利用 CUDA 进行 GPU 加速计算，显著提高了生成大型高精度分形图像的效率。报告将从数学原理、算法设计、项目架构等方面进行阐述。
+\end{abstract}
+
+\section{Mandelbrot 集的数学理论}
+
+\subsection{复数与复平面}
+
+复数是形如 $z = a + bi$ 的数，其中 $a, b$ 是实数，$i$ 是虚数单位，满足 $i^2 = -1$。复数可以在复平面上表示，横坐标代表实部 $a$，纵坐标代表虚部 $b$。复数的模定义为 $|z| = \sqrt{a^2 + b^2}$，表示该点到原点的距离。
+
+\subsection{Mandelbrot 集的定义}
+
+Mandelbrot 集是复平面上的点 $c$ 的集合，满足迭代序列 $z_{n+1} = z_n^2 + c$ 在初始值 $z_0 = 0$ 的条件下保持有界（不发散到无穷大）。
+
+用数学语言表示，Mandelbrot 集 $M$ 定义为：
+\begin{equation}
+M = \{c \in \mathbb{C} : \lim_{n \to \infty} |z_n| \neq \infty \}
+\end{equation}
+
+\subsection{收敛性与边界}
+
+如果对于某个复数 $c$，存在常数 $R$ 使得对所有的 $n$ 都有 $|z_n| \leq R$，则 $c$ 属于 Mandelbrot 集。可以证明，如果某次迭代中 $|z_n| > 2$，则序列一定发散，即该点不属于 Mandelbrot 集。这个重要结论为数值计算提供了有效的判停条件。
+
+\subsection{迭代深度与边界结构}
+
+对于不在 Mandelbrot 集内的点，我们关注它经过多少次迭代后首次满足 $|z_n| > 2$。这个迭代次数称为"逃逸时间"，它反映了该点与 Mandelbrot 集的"距离"。逃逸时间越大，点越接近 Mandelbrot 集的边界。
+
+Mandelbrot 集的边界呈现出极其复杂的分形结构，在任意尺度下观察都能发现相似但不完全相同的精细结构。这种无限复杂性是分形几何的典型特征，也是 Mandelbrot 集视觉吸引力的来源。
+
+\section{Mandelbrot 集的计算方法}
+
+\subsection{基本算法}
+
+计算某点是否属于 Mandelbrot 集的基本算法如下：
+
+\begin{algorithm}
+\caption{计算点 $c$ 的迭代次数}
+\begin{algorithmic}[1]
+\Procedure{ComputeIterations}{$c, maxIterations$}
+    \State $z \gets 0$
+    \State $iterations \gets 0$
+    \While{$|z| \leq 2$ AND $iterations < maxIterations$}
+        \State $z \gets z^2 + c$
+        \State $iterations \gets iterations + 1$
+    \EndWhile
+    \State \Return $iterations$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+在实际计算中，我们无法进行无限次迭代，因此设定一个最大迭代次数作为截止条件。如果达到最大迭代次数仍未发散，我们认为该点属于或非常接近 Mandelbrot 集。
+
+\section{项目结构与功能}
+
+\subsection{系统架构}
+
+项目分为三个主要模块：
+
+\begin{itemize}
+    \item \textbf{MandelbrotSet类}：负责核心计算，包括CPU和GPU实现
+    \item \textbf{Image类}：处理图像生成和颜色映射
+    \item \textbf{主程序}：提供命令行接口和用户交互
+\end{itemize}
+
+\subsection{支持的功能}
+
+本项目支持以下功能：
+
+\begin{itemize}
+    \item 生成PPM和PNG格式的静态图像
+    \item 多种颜色映射方案（HSV平滑渐变和正弦波周期变化）
+    \item 通过CUDA加速的GPU计算
+    \item 生成展示局部细节的缩放动画
+\end{itemize}
+
+\subsection{命令行接口}
+
+系统提供了友好的命令行接口：
+
+\begin{lstlisting}
+// 基本使用
+./mandelbrot --basic                // 生成基本PPM图像
+./mandelbrot --png                  // 生成正弦波颜色的PNG图像
+./mandelbrot --png s                // 生成HSV平滑颜色的PNG图像
+./mandelbrot --zoom                 // 生成缩放动画
+./mandelbrot --cuda --png           // 使用CUDA加速生成PNG图像
+\end{lstlisting}
+
+\section{结果展示}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./figures/mandelbrot.png}
+    \caption{生成的Mandelbrot集图像}
+    \label{fig:mandelbrot}
+\end{figure}
+
+\subsection{视觉效果}
+
+不同的颜色映射方案产生了不同的视觉效果：
+
+\begin{itemize}
+    \item \textbf{基本PPM输出}：使用HSV颜色空间，提供连续的色彩变化
+    \item \textbf{正弦波映射}：产生周期性颜色变化，突出不同"层次"的边界
+    \item \textbf{HSV平滑映射}：创建彩虹般的平滑渐变，适合展示细节结构
+\end{itemize}
+
+\section{结论与展望}
+
+本项目成功实现了Mandelbrot集的高效计算和多样化可视化。通过深入研究Mandelbrot集的数学原理，我们开发了能够生成静态图像和动态缩放动画的系统，并利用GPU并行计算提高了性能。
+
+项目的主要结果包括：
+
+\begin{itemize}
+    \item 多种颜色映射技术，提供丰富的视觉效果
+    \item CUDA加速的高效计算实现
+    \item 支持多种输出格式和缩放动画
+\end{itemize}
+
+\end{document}

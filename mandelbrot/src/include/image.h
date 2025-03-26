@@ -1,5 +1,4 @@
-#ifndef IMAGE_H
-#define IMAGE_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -31,4 +30,4 @@ public:
                              int maxIterations);
 };
 
-#endif // IMAGE_H
+

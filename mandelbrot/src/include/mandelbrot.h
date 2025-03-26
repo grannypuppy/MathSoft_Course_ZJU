@@ -1,5 +1,4 @@
-#ifndef MANDELBROT_H
-#define MANDELBROT_H
+#pragma once
 
 #include <complex>
 #include <vector>
@@ -20,4 +19,4 @@ public:
         int width, int height, int maxIterations);
 };
 
-#endif // MANDELBROT_H
+
