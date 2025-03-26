@@ -13,6 +13,11 @@ public:
     static std::vector<std::vector<int>> computeSet(
         double xMin, double yMin, double xMax, double yMax,
         int width, int height, int maxIterations);
+        
+    // 使用CUDA加速计算给定区域的 Mandelbrot 集
+    static std::vector<std::vector<int>> computeSetCUDA(
+        double xMin, double yMin, double xMax, double yMax,
+        int width, int height, int maxIterations);
 };
 
 #endif // MANDELBROT_H

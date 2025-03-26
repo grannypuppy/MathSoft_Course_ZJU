@@ -12,6 +12,7 @@ void printHelp() {
               << "  --png [s]     Generate PNG image with enhanced colors\n"
               << "                Add 's' for smooth HSV coloring (e.g. --png s)\n"
               << "  --zoom        Generate zoom animation\n"
+              << "  --cuda        Use CUDA acceleration (if available)\n"
               << "  --help        Display this help message\n"
               << std::endl;
 }
@@ -29,17 +30,20 @@ int main(int argc, char* argv[]) {
     // 解析命令行参数
     std::string mode = "basic";
     bool useSmoothing = false;
+    bool useCUDA = false;
 
-    if (argc > 1) {
-        std::string arg = argv[1];
+    for (int i = 1; i < argc; i++) {
+        std::string arg = argv[i];
         if (arg == "--png") {
             mode = "png";
             // 检查是否有额外的平滑参数
-            if (argc > 2 && argv[2][0] == 's') {
+            if (i+1 < argc && argv[i+1][0] == 's') {
                 useSmoothing = true;
+                i++;
             }
         }
         else if (arg == "--zoom") mode = "zoom";
+        else if (arg == "--cuda") useCUDA = true;
         else if (arg == "--help") {
             printHelp();
             return 0;
@@ -53,9 +57,16 @@ int main(int argc, char* argv[]) {
     // 记录开始时间
     auto start = std::chrono::high_resolution_clock::now();
     
-    // 计算 Mandelbrot 集
-    auto result = MandelbrotSet::computeSet(xMin, yMin, xMax, yMax, 
-                                           width, height, maxIterations);
+    // 计算 Mandelbrot 集，使用CUDA或CPU
+    std::vector<std::vector<int>> result;
+    if (useCUDA) {
+        std::cout << "Using CUDA acceleration..." << std::endl;
+        result = MandelbrotSet::computeSetCUDA(xMin, yMin, xMax, yMax, 
+                                             width, height, maxIterations);
+    } else {
+        result = MandelbrotSet::computeSet(xMin, yMin, xMax, yMax, 
+                                         width, height, maxIterations);
+    }
     
     // 记录结束时间
     auto end = std::chrono::high_resolution_clock::now();
