@@ -37,14 +37,32 @@ bool Image::saveAsPPM(const std::vector<std::vector<int>>& data,
             if (iterations == maxIterations) {
                 file << "0 0 0 ";
             } else {
-                // 根据迭代次数生成颜色
-                // 使用平滑的颜色渐变
+                // 根据迭代次数生成颜色 - 修改为更明亮的颜色
                 double ratio = static_cast<double>(iterations) / maxIterations;
-                int r = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 3.14159)));
-                int g = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 6.28318)));
-                int b = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 9.42477)));
                 
-                file << r << " " << g << " " << b << " ";
+                // 使用HSV颜色空间可以得到更鲜艳的结果
+                int hue = static_cast<int>(360.0 * ratio);
+                double saturation = 1.0;
+                double value = 1.0;
+                
+                // 简单的HSV到RGB转换
+                double c = value * saturation;
+                double x = c * (1 - std::abs(std::fmod(hue / 60.0, 2) - 1));
+                double m = value - c;
+                
+                double r, g, b;
+                if (hue < 60) { r = c; g = x; b = 0; }
+                else if (hue < 120) { r = x; g = c; b = 0; }
+                else if (hue < 180) { r = 0; g = c; b = x; }
+                else if (hue < 240) { r = 0; g = x; b = c; }
+                else if (hue < 300) { r = x; g = 0; b = c; }
+                else { r = c; g = 0; b = x; }
+                
+                int red = static_cast<int>(255 * (r + m));
+                int green = static_cast<int>(255 * (g + m));
+                int blue = static_cast<int>(255 * (b + m));
+                
+                file << red << " " << green << " " << blue << " ";
             }
         }
         file << "\n";
@@ -71,41 +89,28 @@ cv::Mat Image::createColorfulImage(const std::vector<std::vector<int>>& data,
     
     // 生成颜色映射表
     for (int i = 0; i <= maxIterations; i++) {
-        double ratio = static_cast<double>(i) / maxIterations;
-        
         if (i == maxIterations) {
             // 在集合内部的点为黑色
             colorMap[i] = cv::Vec3b(0, 0, 0);
-        } else if (useSmoothing) {
-            // 使用更丰富的颜色映射
-            double v = ratio * 6;
-            int vi = static_cast<int>(v);
-            double vf = v - vi;
-            
-            double r, g, b;
-            switch (vi % 6) {
-                case 0: r = 1.0; g = vf; b = 0.0; break;
-                case 1: r = 1.0 - vf; g = 1.0; b = 0.0; break;
-                case 2: r = 0.0; g = 1.0; b = vf; break;
-                case 3: r = 0.0; g = 1.0 - vf; b = 1.0; break;
-                case 4: r = vf; g = 0.0; b = 1.0; break;
-                case 5: r = 1.0; g = 0.0; b = 1.0 - vf; break;
-            }
-            
-            // 应用对数缩放以突出细节
-            double logScale = std::log(ratio * 9 + 1) / std::log(10);
-            r = std::pow(r * 255, logScale);
-            g = std::pow(g * 255, logScale);
-            b = std::pow(b * 255, logScale);
-            
-            colorMap[i] = cv::Vec3b(static_cast<uchar>(b), static_cast<uchar>(g), static_cast<uchar>(r));
         } else {
-            // 简单的颜色映射
-            int r = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 3.14159)));
-            int g = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 6.28318)));
-            int b = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 9.42477)));
+            // 使用更明亮的颜色映射
+            double ratio = static_cast<double>(i) / maxIterations;
             
-            colorMap[i] = cv::Vec3b(b, g, r); // OpenCV使用BGR顺序
+            if (useSmoothing) {
+                // 使用HSV颜色空间生成更鲜艳的颜色
+                double hue = 360.0 * ratio;
+                cv::Mat hsv(1, 1, CV_8UC3, cv::Scalar(hue / 2, 255, 255)); // OpenCV的H范围是0-180
+                cv::Mat rgb;
+                cv::cvtColor(hsv, rgb, cv::COLOR_HSV2BGR);
+                colorMap[i] = rgb.at<cv::Vec3b>(0, 0);
+            } else {
+                // 简单的颜色映射
+                int r = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 3.14159)));
+                int g = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 6.28318)));
+                int b = static_cast<int>(255 * (0.5 + 0.5 * std::sin(ratio * 9.42477)));
+                
+                colorMap[i] = cv::Vec3b(b, g, r); // OpenCV使用BGR顺序
+            }
         }
     }
     
@@ -115,6 +120,13 @@ cv::Mat Image::createColorfulImage(const std::vector<std::vector<int>>& data,
             int iterations = data[y][x];
             image.at<cv::Vec3b>(y, x) = colorMap[iterations];
         }
+    }
+    
+    // 增强对比度
+    if (useSmoothing) {
+        cv::Mat enhancedImage;
+        cv::convertScaleAbs(image, enhancedImage, 1.2, 10);
+        return enhancedImage;
     }
     
     return image;
@@ -148,7 +160,11 @@ bool Image::createZoomGif(double centerX, double centerY,
     
     // 创建一个临时目录来存储帧
     std::string tempDir = "temp_frames";
-    system(("mkdir -p " + tempDir).c_str());
+    int mkdirResult = system(("mkdir -p " + tempDir).c_str());
+    if (mkdirResult != 0) {
+        std::cerr << "Failed to create temporary directory" << std::endl;
+        return false;
+    }
     
     // 计算每一帧的缩放比例（使用对数缩放以获得平滑的缩放效果）
     std::vector<double> scales(frames);
@@ -181,10 +197,17 @@ bool Image::createZoomGif(double centerX, double centerY,
                      "/frame_%d.png -vf \"fps=10,scale=trunc(iw/2)*2:trunc(ih/2)*2,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\" " + 
                      filename;
     
-    int result = system(cmd.c_str());
+    int ffmpegResult = system(cmd.c_str());
+    if (ffmpegResult != 0) {
+        std::cerr << "Failed to create GIF using ffmpeg" << std::endl;
+        // 即使ffmpeg失败，也尝试清理临时文件
+    }
     
     // 清理临时文件
-    system(("rm -rf " + tempDir).c_str());
+    int rmResult = system(("rm -rf " + tempDir).c_str());
+    if (rmResult != 0) {
+        std::cerr << "Warning: Failed to remove temporary directory" << std::endl;
+    }
     
-    return result == 0;
+    return ffmpegResult == 0;
 }

@@ -1,6 +1,5 @@
 #include "include/mandelbrot.h"
 #include "include/image.h"
-#include "include/render3d.h"
 #include <iostream>
 #include <chrono>
 #include <string>
@@ -11,8 +10,6 @@ void printHelp() {
               << "Options:\n"
               << "  --basic       Generate basic Mandelbrot set image (default)\n"
               << "  --png         Generate PNG image with enhanced colors\n"
-              << "  --3d          Generate 3D render of Mandelbrot set\n"
-              << "  --3d-video    Generate 3D rotating animation\n"
               << "  --zoom        Generate zoom animation\n"
               << "  --help        Display this help message\n"
               << std::endl;
@@ -33,8 +30,6 @@ int main(int argc, char* argv[]) {
     if (argc > 1) {
         std::string arg = argv[1];
         if (arg == "--png") mode = "png";
-        else if (arg == "--3d") mode = "3d";
-        else if (arg == "--3d-video") mode = "3d-video";
         else if (arg == "--zoom") mode = "zoom";
         else if (arg == "--help") {
             printHelp();
@@ -72,31 +67,11 @@ int main(int argc, char* argv[]) {
     }
     else if (mode == "png") {
         // 保存为 PNG 图像，带增强的颜色
-        std::string filename = "mandelbrot_enhanced.png";
-        if (Image::saveImage(result, filename, maxIterations, true)) {
+        std::string filename = "mandelbrot.png";
+        if (Image::saveImage(result, filename, maxIterations, false)) {
             std::cout << "Enhanced image saved as " << filename << std::endl;
         } else {
             std::cerr << "Failed to save enhanced image" << std::endl;
-            return 1;
-        }
-    }
-    else if (mode == "3d") {
-        // 生成3D渲染
-        std::string filename = "mandelbrot_3d.png";
-        if (Render3D::create3DRender(result, filename, maxIterations)) {
-            std::cout << "3D render saved as " << filename << std::endl;
-        } else {
-            std::cerr << "Failed to create 3D render" << std::endl;
-            return 1;
-        }
-    }
-    else if (mode == "3d-video") {
-        // 生成3D旋转动画
-        std::string filename = "mandelbrot_3d_rotation.mp4";
-        if (Render3D::create3DAnimation(result, filename, maxIterations)) {
-            std::cout << "3D animation saved as " << filename << std::endl;
-        } else {
-            std::cerr << "Failed to create 3D animation" << std::endl;
             return 1;
         }
     }

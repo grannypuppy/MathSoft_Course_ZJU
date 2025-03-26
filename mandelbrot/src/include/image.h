@@ -1,4 +1,5 @@
-#pragma once
+#ifndef IMAGE_H
+#define IMAGE_H
 
 #include <string>
 #include <vector>
@@ -11,18 +12,18 @@ public:
                          const std::string& filename,
                          int maxIterations);
     
-    // 新增：使用OpenCV保存为多种格式
+    // 使用OpenCV保存为多种格式
     static bool saveImage(const std::vector<std::vector<int>>& data,
                          const std::string& filename,
                          int maxIterations,
                          bool useSmoothing = true);
     
-    // 新增：生成高质量彩色图像
+    // 生成高质量彩色图像
     static cv::Mat createColorfulImage(const std::vector<std::vector<int>>& data,
                                      int maxIterations,
                                      bool useSmoothing = true);
     
-    // 新增：生成动态缩放效果的GIF
+    // 生成动态缩放效果的GIF
     static bool createZoomGif(double centerX, double centerY,
                              double startScale, double endScale,
                              int frames, int width, int height,
@@ -30,3 +31,4 @@ public:
                              int maxIterations);
 };
 
+#endif // IMAGE_H
