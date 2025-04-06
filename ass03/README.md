@@ -16,6 +16,11 @@
     └── test.cpp       # 测试代码
 ```
 
+## 加分点
+
+- [x] 支持GMP库并且模板能支持mpf_class，并能提供测试代码。
+- [x] 实现Polynomial.hpp，支持任意次数的多项式函数，并且提供测试代码。
+
 ## 功能概述
 
 1. **Function.hpp**
@@ -29,7 +34,7 @@
    - 提供获取斜率和截距的方法
 
 3. **Polynomial.hpp**
-   - 实现了多项式函数 f(x) = a_n * x^n + ... + a_1 * x + a_0
+   - 实现了多项式函数 $f(x) = a_n * x^n + ... + a_1 * x + a_0$
    - 使用秦九韶算法高效计算多项式值
    - 支持与LinearFunction相同的数据类型
 
@@ -72,16 +77,6 @@ sudo apt install libgmp-dev
 ```bash
 make clean
 ```
-
-## GMP库支持
-
-本项目支持使用GNU Multiple Precision Arithmetic Library (GMP)进行高精度计算。GMP库提供了任意精度的算术运算，可以处理超出普通数据类型范围的大数值和高精度计算。
-
-在本项目中，通过`mpf_class`类型支持GMP高精度浮点数，可以指定任意精度进行计算。
-
-## 多项式函数实现
-
-`Polynomial`类实现了任意次数的多项式函数，支持与`LinearFunction`相同的数据类型。多项式函数使用秦九韶算法(Horner's method)高效计算函数值，避免了直接计算幂次带来的性能问题。
 
 ## 测试示例
 
