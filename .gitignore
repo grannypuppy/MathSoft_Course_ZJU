@@ -3,10 +3,10 @@
 *.d
 
 # Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+#*.slo
+#*.lo
+#*.o
+#*.obj
 
 # Precompiled Headers
 *.gch
@@ -28,7 +28,7 @@
 *.lib
 
 # Executables
-*.exe
+#*.exe
 *.out
 *.app
 
@@ -499,6 +499,9 @@ cython_debug/
 
 # Ignore all files in the .idea directory
 .idea/
+
+# Ignore all files in the .vscode directory
+.vscode/
 
 # ---> Java
 # Compiled class file
