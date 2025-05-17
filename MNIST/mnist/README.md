@@ -16,8 +16,8 @@
 mnist/
 ├── README.md                   # 项目说明文档
 ├── Makefile                    # 项目构建文件
-├── parameters_cnn.bin          # CNN网络参数文件
 ├── ExportPara/                 # 参数导出代码
+│   ├── parameters_cnn.bin          # CNN网络参数文件
 │   └── export_cnn.ipynb        # 用于导出CNN参数的Jupyter Notebook
 ├── images/                     # 手写数字测试图片
 │   ├── test_0.bmp              # 数字0的测试图片
@@ -44,13 +44,7 @@ make
 make export_cnn
 ```
 
-### 3. 生成测试图片
-
-```bash
-make gen_test_images
-```
-
-### 4. 测试单个图片
+### 3. 测试单个图片
 
 ```bash
 make test
@@ -62,19 +56,19 @@ make test
 ./bin/mnist_cnn images/test_5.bmp
 ```
 
-### 5. 测试所有示例图片
+### 4. 测试所有示例图片
 
 ```bash
 make test_all
 ```
 
-### 6. 在MNIST测试集上评估准确率
+### 5. 在MNIST测试集上评估准确率
 
 ```bash
 make run
 ```
 
-### 7. 清理编译产物
+### 6. 清理编译产物
 
 ```bash
 make clean
@@ -102,11 +96,4 @@ make clean
 
 1. 使用线性内存布局减少内存访问开销
 2. 避免动态内存分配和释放的频繁操作
-3. 编译时使用O3优化
-4. 卷积核实现时直接计算偏移量，避免多重循环中的重复计算
-
-## 参考资料
-
-- [MNIST数据集](http://yann.lecun.com/exdb/mnist/)
-- [PyTorch文档](https://pytorch.org/docs/stable/index.html)
-- [卷积神经网络介绍](http://cs231n.github.io/convolutional-networks/)
+3. 卷积核实现时直接计算偏移量，避免多重循环中的重复计算
