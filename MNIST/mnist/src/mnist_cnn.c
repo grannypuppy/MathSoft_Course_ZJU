@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
             // 将图像数据转换为浮点数
             for (int j = 0; j < IMG_H * IMG_W; j++)
             {
-                img[j] = images[i][j] / 255.0f;
+                img[j] = images[i][j] / 255.0f; // 简单归一化，cnn_forward中会做正确的标准化
             }
 
             // 执行CNN前向推理
@@ -264,10 +264,19 @@ void cnn_forward(
 {
     // 临时缓冲区
     float conv1_output[CONV1_OUT_CHANNELS * CONV1_OUT_H * CONV1_OUT_W];
-    float pool1_output[CONV1_OUT_CHANNELS * POOL1_OUT_H * POOL1_OUT_W];
+    float relu1_output[CONV1_OUT_CHANNELS * CONV1_OUT_H * CONV1_OUT_W];
     float conv2_output[CONV2_OUT_CHANNELS * CONV2_OUT_H * CONV2_OUT_W];
+    float relu2_output[CONV2_OUT_CHANNELS * CONV2_OUT_H * CONV2_OUT_W];
+    float pool1_output[CONV2_OUT_CHANNELS * POOL1_OUT_H * POOL1_OUT_W];
     float pool2_output[CONV2_OUT_CHANNELS * POOL2_OUT_H * POOL2_OUT_W];
     float fc1_output[FC1_OUT];
+    
+    // 输入标准化: 转换为与PyTorch相同的标准化格式
+    float normalized_input[IMG_C * IMG_H * IMG_W];
+    for (int i = 0; i < IMG_H * IMG_W; i++) {
+        // 应用与PyTorch相同的标准化: (x - mean) / std
+        normalized_input[i] = (input[i] - 0.1307f) / 0.3081f;
+    }
     
     // 1. 第一个卷积层: input -> conv1_output
     for (int oc = 0; oc < CONV1_OUT_CHANNELS; oc++) {
@@ -281,7 +290,7 @@ void cnn_forward(
                         int w_idx = ow + kw - CONV1_PADDING;
                         
                         if (h_idx >= 0 && h_idx < IMG_H && w_idx >= 0 && w_idx < IMG_W) {
-                            float in_val = input[h_idx * IMG_W + w_idx];
+                            float in_val = normalized_input[h_idx * IMG_W + w_idx];
                             float weight_val = conv1_weight[oc * CONV1_IN_CHANNELS * CONV1_KERNEL_SIZE * CONV1_KERNEL_SIZE + 
                                                           0 * CONV1_KERNEL_SIZE * CONV1_KERNEL_SIZE + 
                                                           kh * CONV1_KERNEL_SIZE + kw];
@@ -290,15 +299,19 @@ void cnn_forward(
                     }
                 }
                 
-                // 添加偏置并应用ReLU
+                // 添加偏置
                 sum += conv1_bias[oc];
-                if (sum < 0) sum = 0; // ReLU
                 conv1_output[oc * CONV1_OUT_H * CONV1_OUT_W + oh * CONV1_OUT_W + ow] = sum;
             }
         }
     }
     
-    // 2. 第二个卷积层: conv1_output -> conv2_output（注意：根据模型结构，顺序调整）
+    // 应用ReLU到conv1_output
+    for (int i = 0; i < CONV1_OUT_CHANNELS * CONV1_OUT_H * CONV1_OUT_W; i++) {
+        relu1_output[i] = conv1_output[i] > 0 ? conv1_output[i] : 0;
+    }
+    
+    // 2. 第二个卷积层: relu1_output -> conv2_output
     for (int oc = 0; oc < CONV2_OUT_CHANNELS; oc++) {
         for (int oh = 0; oh < CONV2_OUT_H; oh++) {
             for (int ow = 0; ow < CONV2_OUT_W; ow++) {
@@ -311,7 +324,7 @@ void cnn_forward(
                             int w_idx = ow + kw - CONV2_PADDING;
                             
                             if (h_idx >= 0 && h_idx < CONV1_OUT_H && w_idx >= 0 && w_idx < CONV1_OUT_W) {
-                                float in_val = conv1_output[ic * CONV1_OUT_H * CONV1_OUT_W + h_idx * CONV1_OUT_W + w_idx];
+                                float in_val = relu1_output[ic * CONV1_OUT_H * CONV1_OUT_W + h_idx * CONV1_OUT_W + w_idx];
                                 float weight_val = conv2_weight[oc * CONV2_IN_CHANNELS * CONV2_KERNEL_SIZE * CONV2_KERNEL_SIZE + 
                                                               ic * CONV2_KERNEL_SIZE * CONV2_KERNEL_SIZE +
                                                               kh * CONV2_KERNEL_SIZE + kw];
@@ -321,22 +334,26 @@ void cnn_forward(
                     }
                 }
                 
-                // 添加偏置并应用ReLU
+                // 添加偏置
                 sum += conv2_bias[oc];
-                if (sum < 0) sum = 0; // ReLU
                 conv2_output[oc * CONV2_OUT_H * CONV2_OUT_W + oh * CONV2_OUT_W + ow] = sum;
             }
         }
     }
+
+    // 应用ReLU到conv2_output
+    for (int i = 0; i < CONV2_OUT_CHANNELS * CONV2_OUT_H * CONV2_OUT_W; i++) {
+        relu2_output[i] = conv2_output[i] > 0 ? conv2_output[i] : 0;
+    }
     
-    // 3. 第一次池化: conv2_output -> pool1_output
+    // 3. 第一次池化: relu2_output -> pool1_output
     for (int c = 0; c < CONV2_OUT_CHANNELS; c++) {
         for (int h = 0; h < POOL1_OUT_H; h++) {
             for (int w = 0; w < POOL1_OUT_W; w++) {
-                float max_val = conv2_output[c * CONV2_OUT_H * CONV2_OUT_W + 2*h * CONV2_OUT_W + 2*w];
-                max_val = fmaxf(max_val, conv2_output[c * CONV2_OUT_H * CONV2_OUT_W + 2*h * CONV2_OUT_W + 2*w+1]);
-                max_val = fmaxf(max_val, conv2_output[c * CONV2_OUT_H * CONV2_OUT_W + (2*h+1) * CONV2_OUT_W + 2*w]);
-                max_val = fmaxf(max_val, conv2_output[c * CONV2_OUT_H * CONV2_OUT_W + (2*h+1) * CONV2_OUT_W + 2*w+1]);
+                float max_val = relu2_output[c * CONV2_OUT_H * CONV2_OUT_W + 2*h * CONV2_OUT_W + 2*w];
+                max_val = fmaxf(max_val, relu2_output[c * CONV2_OUT_H * CONV2_OUT_W + 2*h * CONV2_OUT_W + 2*w+1]);
+                max_val = fmaxf(max_val, relu2_output[c * CONV2_OUT_H * CONV2_OUT_W + (2*h+1) * CONV2_OUT_W + 2*w]);
+                max_val = fmaxf(max_val, relu2_output[c * CONV2_OUT_H * CONV2_OUT_W + (2*h+1) * CONV2_OUT_W + 2*w+1]);
                 
                 pool1_output[c * POOL1_OUT_H * POOL1_OUT_W + h * POOL1_OUT_W + w] = max_val;
             }
@@ -364,8 +381,7 @@ void cnn_forward(
             sum += pool2_output[j] * fc1_weight[i * FC1_IN + j];
         }
         sum += fc1_bias[i];
-        if (sum < 0) sum = 0; // ReLU
-        fc1_output[i] = sum;
+        fc1_output[i] = sum > 0 ? sum : 0; // ReLU
     }
     
     // 6. 第二个全连接层: fc1_output -> output
@@ -428,7 +444,7 @@ void readbmp(const char *filename, float *img)
         fread(row_buf, 1, row_bytes, f);
         for (int x = 0; x < width; ++x)
         {
-            // 直接读取灰度值并归一化
+            // 只做简单的归一化，后续在cnn_forward中会做标准化处理
             img[y * width + x] = row_buf[x] / 255.0f;
         }
     }
