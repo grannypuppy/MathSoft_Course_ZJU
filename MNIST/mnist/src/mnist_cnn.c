@@ -12,15 +12,15 @@
 
 // 卷积层1参数
 #define CONV1_IN_CHANNELS 1
-#define CONV1_OUT_CHANNELS 32
+#define CONV1_OUT_CHANNELS 2
 #define CONV1_KERNEL_SIZE 3
 #define CONV1_PADDING 1
 #define CONV1_OUT_W 28
 #define CONV1_OUT_H 28
 
 // 卷积层2参数
-#define CONV2_IN_CHANNELS 32
-#define CONV2_OUT_CHANNELS 64
+#define CONV2_IN_CHANNELS 2
+#define CONV2_OUT_CHANNELS 3
 #define CONV2_KERNEL_SIZE 3
 #define CONV2_PADDING 1
 #define CONV2_OUT_W 28
@@ -33,9 +33,9 @@
 #define POOL2_OUT_H 7
 
 // 全连接层参数
-#define FC1_IN 64 * 7 * 7 // 3136
-#define FC1_OUT 128
-#define FC2_IN 128
+#define FC1_IN 3 * 7 * 7 // 147
+#define FC1_OUT 16
+#define FC2_IN 16
 #define FC2_OUT 10
 
 // 函数声明
@@ -251,13 +251,13 @@ int main(int argc, char *argv[])
 // 简化的CNN前向传播函数实现
 void cnn_forward(
     float *input,        // 输入图像 [1, 28, 28]
-    float *conv1_weight, // [32, 1, 3, 3]
-    float *conv1_bias,   // [32]
-    float *conv2_weight, // [64, 32, 3, 3]
-    float *conv2_bias,   // [64]
-    float *fc1_weight,   // [128, 3136]
-    float *fc1_bias,     // [128]
-    float *fc2_weight,   // [10, 128]
+    float *conv1_weight, // [2, 1, 3, 3]
+    float *conv1_bias,   // [2]
+    float *conv2_weight, // [3, 2, 3, 3]
+    float *conv2_bias,   // [3]
+    float *fc1_weight,   // [16, 147]
+    float *fc1_bias,     // [16]
+    float *fc2_weight,   // [10, 16]
     float *fc2_bias,     // [10]
     float *output        // [10]
 )
@@ -329,7 +329,7 @@ void cnn_forward(
         }
     }
     
-    // 3. 第一次池化: conv2_output -> pool1_output（修正：先卷积再池化）
+    // 3. 第一次池化: conv2_output -> pool1_output
     for (int c = 0; c < CONV2_OUT_CHANNELS; c++) {
         for (int h = 0; h < POOL1_OUT_H; h++) {
             for (int w = 0; w < POOL1_OUT_W; w++) {
