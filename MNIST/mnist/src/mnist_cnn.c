@@ -43,139 +43,11 @@ uint32_t read_big_endian(FILE *fp);
 uint8_t **read_mnist_images(const char *filename, uint32_t *num_images, uint32_t *rows, uint32_t *cols);
 uint8_t *read_mnist_labels(const char *filename, uint32_t *num_labels);
 void readbmp(const char *filename, float *img);
-float max_of_four(float a, float b, float c, float d);
-
-// CNN前向传播函数
-void cnn_forward(
-    float *input, // 输入图像 [1, 28, 28]
-
-    // 卷积层1参数
-    float *conv1_weight, // [32, 1, 3, 3]
-    float *conv1_bias,   // [32]
-
-    // 卷积层2参数
-    float *conv2_weight, // [64, 32, 3, 3]
-    float *conv2_bias,   // [64]
-
-    // 全连接层1参数
-    float *fc1_weight, // [128, 3136]
-    float *fc1_bias,   // [128]
-
-    // 全连接层2参数
-    float *fc2_weight, // [10, 128]
-    float *fc2_bias,   // [10]
-
-    // 输出
-    float *output // [10]
-);
-
-// ReLU激活函数
-void relu(float *x, int len)
-{
-    for (int i = 0; i < len; i++)
-    {
-        if (x[i] < 0)
-            x[i] = 0;
-    }
-}
-
-// 2x2最大池化
-void max_pool_2x2(float *input, int in_h, int in_w, int channels, float *output)
-{
-    int out_h = in_h / 2;
-    int out_w = in_w / 2;
-
-    for (int c = 0; c < channels; c++)
-    {
-        for (int h = 0; h < out_h; h++)
-        {
-            for (int w = 0; w < out_w; w++)
-            {
-                int in_idx_base = c * in_h * in_w + 2 * h * in_w + 2 * w;
-                float max_val = input[in_idx_base];
-                max_val = fmaxf(max_val, input[in_idx_base + 1]);
-                max_val = fmaxf(max_val, input[in_idx_base + in_w]);
-                max_val = fmaxf(max_val, input[in_idx_base + in_w + 1]);
-
-                output[c * out_h * out_w + h * out_w + w] = max_val;
-            }
-        }
-    }
-}
-
-// 2D卷积操作 (带padding)
-void conv2d(float *input, int in_h, int in_w, int in_c,
-            float *weight, float *bias, int out_c, int kernel_size,
-            int padding, float *output, int out_h, int out_w)
-{
-
-    // 创建带padding的临时输入
-    int padded_h = in_h + 2 * padding;
-    int padded_w = in_w + 2 * padding;
-    float *padded_input = (float *)calloc(in_c * padded_h * padded_w, sizeof(float));
-
-    // 填充输入
-    for (int c = 0; c < in_c; c++)
-    {
-        for (int h = 0; h < in_h; h++)
-        {
-            for (int w = 0; w < in_w; w++)
-            {
-                padded_input[c * padded_h * padded_w + (h + padding) * padded_w + (w + padding)] =
-                    input[c * in_h * in_w + h * in_w + w];
-            }
-        }
-    }
-
-    // 进行卷积计算
-    for (int oc = 0; oc < out_c; oc++)
-    {
-        for (int oh = 0; oh < out_h; oh++)
-        {
-            for (int ow = 0; ow < out_w; ow++)
-            {
-                float sum = 0.0f;
-
-                for (int ic = 0; ic < in_c; ic++)
-                {
-                    for (int kh = 0; kh < kernel_size; kh++)
-                    {
-                        for (int kw = 0; kw < kernel_size; kw++)
-                        {
-                            int h_idx = oh + kh;
-                            int w_idx = ow + kw;
-                            float in_val = padded_input[ic * padded_h * padded_w + h_idx * padded_w + w_idx];
-                            float weight_val = weight[oc * in_c * kernel_size * kernel_size +
-                                                      ic * kernel_size * kernel_size +
-                                                      kh * kernel_size + kw];
-                            sum += in_val * weight_val;
-                        }
-                    }
-                }
-
-                // 添加偏置并存储到输出
-                output[oc * out_h * out_w + oh * out_w + ow] = sum + bias[oc];
-            }
-        }
-    }
-
-    free(padded_input);
-}
-
-// 全连接层运算
-void fully_connected(float *input, float *weight, float *bias,
-                     int in_features, int out_features, float *output)
-{
-    for (int i = 0; i < out_features; i++)
-    {
-        float sum = 0.0f;
-        for (int j = 0; j < in_features; j++)
-        {
-            sum += input[j] * weight[i * in_features + j];
-        }
-        output[i] = sum + bias[i];
-    }
-}
+void cnn_forward(float *input, float *conv1_weight, float *conv1_bias, 
+                float *conv2_weight, float *conv2_bias, 
+                float *fc1_weight, float *fc1_bias, 
+                float *fc2_weight, float *fc2_bias, 
+                float *output);
 
 int main(int argc, char *argv[])
 {
@@ -287,8 +159,9 @@ int main(int argc, char *argv[])
 
         // 找出最大值的索引
         int predicted = 0;
-        for (int i = 1; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
+            printf("%f ", output[i]);
             if (output[predicted] < output[i])
             {
                 predicted = i;
@@ -375,7 +248,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// CNN前向传播函数实现
+// 简化的CNN前向传播函数实现
 void cnn_forward(
     float *input,        // 输入图像 [1, 28, 28]
     float *conv1_weight, // [32, 1, 3, 3]
@@ -389,66 +262,120 @@ void cnn_forward(
     float *output        // [10]
 )
 {
-    // 分配临时缓冲区
-    float *conv1_output = (float *)malloc(CONV1_OUT_CHANNELS * CONV1_OUT_H * CONV1_OUT_W * sizeof(float));
-    float *conv1_relu_output = (float *)malloc(CONV1_OUT_CHANNELS * CONV1_OUT_H * CONV1_OUT_W * sizeof(float));
-    float *pool1_output = (float *)malloc(CONV1_OUT_CHANNELS * POOL1_OUT_H * POOL1_OUT_W * sizeof(float));
-
-    float *conv2_output = (float *)malloc(CONV2_OUT_CHANNELS * CONV2_OUT_H * CONV2_OUT_W * sizeof(float));
-    float *conv2_relu_output = (float *)malloc(CONV2_OUT_CHANNELS * CONV2_OUT_H * CONV2_OUT_W * sizeof(float));
-    float *pool2_output = (float *)malloc(CONV2_OUT_CHANNELS * POOL2_OUT_H * POOL2_OUT_W * sizeof(float));
-
-    float *flatten_output = (float *)malloc(FC1_IN * sizeof(float));
-    float *fc1_output = (float *)malloc(FC1_OUT * sizeof(float));
-    float *fc1_relu_output = (float *)malloc(FC1_OUT * sizeof(float));
-
-    // 1. 第一个卷积层
-    conv2d(input, IMG_H, IMG_W, IMG_C,
-           conv1_weight, conv1_bias, CONV1_OUT_CHANNELS, CONV1_KERNEL_SIZE,
-           CONV1_PADDING, conv1_output, CONV1_OUT_H, CONV1_OUT_W);
-
-    // 2. ReLU激活
-    memcpy(conv1_relu_output, conv1_output, CONV1_OUT_CHANNELS * CONV1_OUT_H * CONV1_OUT_W * sizeof(float));
-    relu(conv1_relu_output, CONV1_OUT_CHANNELS * CONV1_OUT_H * CONV1_OUT_W);
-
-    // 3. 第一次池化
-    max_pool_2x2(conv1_relu_output, CONV1_OUT_H, CONV1_OUT_W, CONV1_OUT_CHANNELS, pool1_output);
-
-    // 4. 第二个卷积层
-    conv2d(pool1_output, POOL1_OUT_H, POOL1_OUT_W, CONV1_OUT_CHANNELS,
-           conv2_weight, conv2_bias, CONV2_OUT_CHANNELS, CONV2_KERNEL_SIZE,
-           CONV2_PADDING, conv2_output, CONV2_OUT_H, CONV2_OUT_W);
-
-    // 5. ReLU激活
-    memcpy(conv2_relu_output, conv2_output, CONV2_OUT_CHANNELS * CONV2_OUT_H * CONV2_OUT_W * sizeof(float));
-    relu(conv2_relu_output, CONV2_OUT_CHANNELS * CONV2_OUT_H * CONV2_OUT_W);
-
-    // 6. 第二次池化
-    max_pool_2x2(conv2_relu_output, CONV2_OUT_H, CONV2_OUT_W, CONV2_OUT_CHANNELS, pool2_output);
-
-    // 7. 展平操作 (64 * 7 * 7 = 3136)
-    memcpy(flatten_output, pool2_output, FC1_IN * sizeof(float));
-
-    // 8. 第一个全连接层
-    fully_connected(flatten_output, fc1_weight, fc1_bias, FC1_IN, FC1_OUT, fc1_output);
-
-    // 9. ReLU激活
-    memcpy(fc1_relu_output, fc1_output, FC1_OUT * sizeof(float));
-    relu(fc1_relu_output, FC1_OUT);
-
-    // 10. 第二个全连接层 (输出层)
-    fully_connected(fc1_relu_output, fc2_weight, fc2_bias, FC2_IN, FC2_OUT, output);
-
-    // 释放临时缓冲区
-    free(conv1_output);
-    free(conv1_relu_output);
-    free(pool1_output);
-    free(conv2_output);
-    free(conv2_relu_output);
-    free(pool2_output);
-    free(flatten_output);
-    free(fc1_output);
-    free(fc1_relu_output);
+    // 临时缓冲区
+    float conv1_output[CONV1_OUT_CHANNELS * CONV1_OUT_H * CONV1_OUT_W];
+    float pool1_output[CONV1_OUT_CHANNELS * POOL1_OUT_H * POOL1_OUT_W];
+    float conv2_output[CONV2_OUT_CHANNELS * CONV2_OUT_H * CONV2_OUT_W];
+    float pool2_output[CONV2_OUT_CHANNELS * POOL2_OUT_H * POOL2_OUT_W];
+    float fc1_output[FC1_OUT];
+    
+    // 1. 第一个卷积层: input -> conv1_output
+    for (int oc = 0; oc < CONV1_OUT_CHANNELS; oc++) {
+        for (int oh = 0; oh < CONV1_OUT_H; oh++) {
+            for (int ow = 0; ow < CONV1_OUT_W; ow++) {
+                float sum = 0.0f;
+                
+                for (int kh = 0; kh < CONV1_KERNEL_SIZE; kh++) {
+                    for (int kw = 0; kw < CONV1_KERNEL_SIZE; kw++) {
+                        int h_idx = oh + kh - CONV1_PADDING;
+                        int w_idx = ow + kw - CONV1_PADDING;
+                        
+                        if (h_idx >= 0 && h_idx < IMG_H && w_idx >= 0 && w_idx < IMG_W) {
+                            float in_val = input[h_idx * IMG_W + w_idx];
+                            float weight_val = conv1_weight[oc * CONV1_IN_CHANNELS * CONV1_KERNEL_SIZE * CONV1_KERNEL_SIZE + 
+                                                          0 * CONV1_KERNEL_SIZE * CONV1_KERNEL_SIZE + 
+                                                          kh * CONV1_KERNEL_SIZE + kw];
+                            sum += in_val * weight_val;
+                        }
+                    }
+                }
+                
+                // 添加偏置并应用ReLU
+                sum += conv1_bias[oc];
+                if (sum < 0) sum = 0; // ReLU
+                conv1_output[oc * CONV1_OUT_H * CONV1_OUT_W + oh * CONV1_OUT_W + ow] = sum;
+            }
+        }
+    }
+    
+    // 2. 第二个卷积层: conv1_output -> conv2_output（注意：根据模型结构，顺序调整）
+    for (int oc = 0; oc < CONV2_OUT_CHANNELS; oc++) {
+        for (int oh = 0; oh < CONV2_OUT_H; oh++) {
+            for (int ow = 0; ow < CONV2_OUT_W; ow++) {
+                float sum = 0.0f;
+                
+                for (int ic = 0; ic < CONV2_IN_CHANNELS; ic++) {
+                    for (int kh = 0; kh < CONV2_KERNEL_SIZE; kh++) {
+                        for (int kw = 0; kw < CONV2_KERNEL_SIZE; kw++) {
+                            int h_idx = oh + kh - CONV2_PADDING;
+                            int w_idx = ow + kw - CONV2_PADDING;
+                            
+                            if (h_idx >= 0 && h_idx < CONV1_OUT_H && w_idx >= 0 && w_idx < CONV1_OUT_W) {
+                                float in_val = conv1_output[ic * CONV1_OUT_H * CONV1_OUT_W + h_idx * CONV1_OUT_W + w_idx];
+                                float weight_val = conv2_weight[oc * CONV2_IN_CHANNELS * CONV2_KERNEL_SIZE * CONV2_KERNEL_SIZE + 
+                                                              ic * CONV2_KERNEL_SIZE * CONV2_KERNEL_SIZE +
+                                                              kh * CONV2_KERNEL_SIZE + kw];
+                                sum += in_val * weight_val;
+                            }
+                        }
+                    }
+                }
+                
+                // 添加偏置并应用ReLU
+                sum += conv2_bias[oc];
+                if (sum < 0) sum = 0; // ReLU
+                conv2_output[oc * CONV2_OUT_H * CONV2_OUT_W + oh * CONV2_OUT_W + ow] = sum;
+            }
+        }
+    }
+    
+    // 3. 第一次池化: conv2_output -> pool1_output（修正：先卷积再池化）
+    for (int c = 0; c < CONV2_OUT_CHANNELS; c++) {
+        for (int h = 0; h < POOL1_OUT_H; h++) {
+            for (int w = 0; w < POOL1_OUT_W; w++) {
+                float max_val = conv2_output[c * CONV2_OUT_H * CONV2_OUT_W + 2*h * CONV2_OUT_W + 2*w];
+                max_val = fmaxf(max_val, conv2_output[c * CONV2_OUT_H * CONV2_OUT_W + 2*h * CONV2_OUT_W + 2*w+1]);
+                max_val = fmaxf(max_val, conv2_output[c * CONV2_OUT_H * CONV2_OUT_W + (2*h+1) * CONV2_OUT_W + 2*w]);
+                max_val = fmaxf(max_val, conv2_output[c * CONV2_OUT_H * CONV2_OUT_W + (2*h+1) * CONV2_OUT_W + 2*w+1]);
+                
+                pool1_output[c * POOL1_OUT_H * POOL1_OUT_W + h * POOL1_OUT_W + w] = max_val;
+            }
+        }
+    }
+    
+    // 4. 第二次池化: pool1_output -> pool2_output
+    for (int c = 0; c < CONV2_OUT_CHANNELS; c++) {
+        for (int h = 0; h < POOL2_OUT_H; h++) {
+            for (int w = 0; w < POOL2_OUT_W; w++) {
+                float max_val = pool1_output[c * POOL1_OUT_H * POOL1_OUT_W + 2*h * POOL1_OUT_W + 2*w];
+                max_val = fmaxf(max_val, pool1_output[c * POOL1_OUT_H * POOL1_OUT_W + 2*h * POOL1_OUT_W + 2*w+1]);
+                max_val = fmaxf(max_val, pool1_output[c * POOL1_OUT_H * POOL1_OUT_W + (2*h+1) * POOL1_OUT_W + 2*w]);
+                max_val = fmaxf(max_val, pool1_output[c * POOL1_OUT_H * POOL1_OUT_W + (2*h+1) * POOL1_OUT_W + 2*w+1]);
+                
+                pool2_output[c * POOL2_OUT_H * POOL2_OUT_W + h * POOL2_OUT_W + w] = max_val;
+            }
+        }
+    }
+    
+    // 5. 第一个全连接层: pool2_output (展平) -> fc1_output
+    for (int i = 0; i < FC1_OUT; i++) {
+        float sum = 0.0f;
+        for (int j = 0; j < FC1_IN; j++) {
+            sum += pool2_output[j] * fc1_weight[i * FC1_IN + j];
+        }
+        sum += fc1_bias[i];
+        if (sum < 0) sum = 0; // ReLU
+        fc1_output[i] = sum;
+    }
+    
+    // 6. 第二个全连接层: fc1_output -> output
+    for (int i = 0; i < FC2_OUT; i++) {
+        float sum = 0.0f;
+        for (int j = 0; j < FC2_IN; j++) {
+            sum += fc1_output[j] * fc2_weight[i * FC2_IN + j];
+        }
+        output[i] = sum + fc2_bias[i];
+    }
 }
 
 void readbmp(const char *filename, float *img)
