@@ -20,7 +20,7 @@
 
 // 卷积层2参数
 #define CONV2_IN_CHANNELS 2
-#define CONV2_OUT_CHANNELS 3
+#define CONV2_OUT_CHANNELS 4
 #define CONV2_KERNEL_SIZE 3
 #define CONV2_PADDING 1
 #define CONV2_OUT_W 28
@@ -33,9 +33,9 @@
 #define POOL2_OUT_H 7
 
 // 全连接层参数
-#define FC1_IN 3 * 7 * 7 // 147
-#define FC1_OUT 6
-#define FC2_IN 6
+#define FC1_IN 4 * 7 * 7 
+#define FC1_OUT 24
+#define FC2_IN 24
 #define FC2_OUT 10
 
 // 函数声明

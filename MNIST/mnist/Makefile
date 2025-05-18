@@ -34,6 +34,6 @@ test_all:
 
 # 导出CNN参数
 export_cnn:
-	jupyter nbconvert --execute $(EXPORT_DIR)/export_cnn.ipynb
-	
+	jupyter nbconvert --to notebook --execute --inplace $(EXPORT_DIR)/export_cnn.ipynb
+
 .PHONY: all clean run test test_all gen_test_images directories export_cnn
