@@ -21,21 +21,19 @@ clean:
 run:
 	$(BIN_DIR)/mnist_cnn
 
-# 运行一个测试图片的识别
+# 运行（第）一个测试图片的识别
 test: 
 	$(BIN_DIR)/mnist_cnn images/test_0.bmp
 
 # 测试所有图片
 test_all:
-	for i in {0..9}; do \
+	for i in `seq 0 9`; do \
 		echo "Testing images/test_$$i.bmp:"; \
 		$(BIN_DIR)/mnist_cnn images/test_$$i.bmp; \
 	done
 
 # 导出CNN参数
 export_cnn:
-	mkdir -p data
-	jupyter nbconvert --to notebook --execute $(EXPORT_DIR)/export_cnn.ipynb --output export_cnn_executed
-	mv parameters_cnn.bin ./
+	jupyter nbconvert --execute $(EXPORT_DIR)/export_cnn.ipynb
 	
 .PHONY: all clean run test test_all gen_test_images directories export_cnn

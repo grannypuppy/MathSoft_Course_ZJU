@@ -34,8 +34,8 @@
 
 // 全连接层参数
 #define FC1_IN 3 * 7 * 7 // 147
-#define FC1_OUT 16
-#define FC2_IN 16
+#define FC1_OUT 6
+#define FC2_IN 6
 #define FC2_OUT 10
 
 // 函数声明
@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
         int predicted = 0;
         for (int i = 0; i < 10; i++)
         {
-            printf("%f ", output[i]);
+            //printf("%f ", output[i]);
             if (output[predicted] < output[i])
             {
                 predicted = i;

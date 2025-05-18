@@ -91,6 +91,7 @@ make clean
 9. 全连接层2: 输入128，输出10
 
 > 总参数量为：  32x1x3x3 + 32 + 64x32x3x3 + 64 + 64x7x7x128 + 128 + 128x10 + 10 = 421,642
+> 正确率：99.0%
 
 #### 我经过简化后的参数网络结构如下：
 
@@ -100,8 +101,51 @@ make clean
 4. 卷积层2: 输入2×14×14，输出3×14×14，卷积核大小3×3，padding=1
 5. ReLU激活函数
 6. 最大池化: 2×2，输出3×7×7
-7. 全连接层1: 输入3×7×7=147，输出16
+7. 全连接层1: 输入3×7×7=147，输出6
 8. ReLU激活函数
-9. 全连接层2: 输入16，输出10
+9. 全连接层2: 输入6，输出10
 
-> 总参数量为：2x1x3x3 + 2 + 3x2x3x3 + 3 + 3x7x7x16 + 16 + 16x10 + 10 = 2,615
+> 总参数量为：2x1x3x3 + 2 + 3x2x3x3 + 3 + 3x7x7x6 + 6 + 6x10 + 10 = 1,035
+> MNIST验证集正确率：94.6%
+
+***参数规模缩小了400倍，正确率仅下降了4.8%***
+
+#### 自己的手写数字测验结果
+
+```shell
+bin/mnist_cnn images/test_0.bmp
+识别结果: 0
+
+bin/mnist_cnn images/test_1.bmp
+识别结果: 1
+
+bin/mnist_cnn images/test_2.bmp
+识别结果: 2
+
+bin/mnist_cnn images/test_3.bmp
+识别结果: 3
+
+bin/mnist_cnn images/test_4.bmp
+识别结果: 1
+
+bin/mnist_cnn images/test_5.bmp
+识别结果: 5
+
+bin/mnist_cnn images/test_6.bmp
+识别结果: 8
+
+bin/mnist_cnn images/test_7.bmp
+识别结果: 1
+
+bin/mnist_cnn images/test_8.bmp
+识别结果: 8
+
+bin/mnist_cnn images/test_9.bmp
+识别结果: 1
+```
+
+正确率仅为：60%，其中不论什么输入，tag1与tag8结果均较高
+
+> 并且，随着我不断减小网络规模和复杂度，尽管MNIST验证集的正确率缓慢下降，但手写结果的正确率显著提高（从20%提高到60%）
+
+> 可能是由于任务过于简单，MNIST数据集过于典型，发生了很强的过拟合
