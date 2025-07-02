@@ -521,3 +521,7 @@ cython_debug/
 hs_err_pid*
 replay_pid*
 
+gsl-2.8/
+
+data/
+bin/
